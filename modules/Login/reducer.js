@@ -7,9 +7,9 @@ export const postLogin = (phoneNumber, birthDate) => ({
     payload: { phoneNumber, birthDate }
 })
 
-export const postLoginSuccess = (isNewUser) => ({
+export const postLoginSuccess = (user, token) => ({
     type: POST_LOGIN_SUCCESS,
-    payload: { isNewUser }
+    payload: { user, token }
 })
 
 export const postLoginFailure = (error) => ({

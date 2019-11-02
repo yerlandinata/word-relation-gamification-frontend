@@ -1,34 +1,45 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { createLogger } from 'redux-logger'
 import { createEpicMiddleware, combineEpics } from 'redux-observable'
-import { composeWithDevTools } from 'redux-devtools-extension';
-import getConfig from "next/config";
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 import mainPageReducer from 'modules/MainPage/reducer'
-import wordPairReducer from 'modules/WordPair/reducer'
-import wordPairEpics from 'modules/WordPair/epics'
-import annotationReducer from 'modules/Annotation/reducer'
-import annotationEpics from 'modules/Annotation/epics'
 import loginReducer from 'modules/Login/reducer'
-
-const { publicRuntimeConfig } = getConfig();
+import loginEpics from 'modules/Login/epics'
+import getAuthenticatedApi from './api'
+import profileEpics from 'modules/Profile/epics'
+import profileReducer from 'modules/Profile/reducer'
+import userInfoReducer from 'modules/UserInfo/reducer'
+import userInfoEpics from 'modules/UserInfo/epics'
+import mainPageEpics from 'modules/MainPage/epics'
+import goldStandardReducer from 'modules/GoldStandard/reducer'
+import gameReducer from 'modules/Game/reducer'
+import goldStandardEpics from 'modules/GoldStandard/epics'
+import gameEpics from 'modules/Game/epics'
 
 const rootReducer = combineReducers({
-  wordPairState: wordPairReducer,
   mainPageState: mainPageReducer,
-  annotationState: annotationReducer,
   loginState: loginReducer,
+  profileState: profileReducer,
+  userInfoState: userInfoReducer,
+  goldStandardState: goldStandardReducer,
+  gameState: gameReducer,
 })
 
 const rootEpic = combineEpics(
-  wordPairEpics,
-  annotationEpics,
+  mainPageEpics,
+  loginEpics,
+  profileEpics,
+  userInfoEpics,
+  goldStandardEpics,
+  gameEpics,
 )
 
 export default function initStore (initialState) {
   const epicMiddleware = createEpicMiddleware({
     dependencies: {
-      apiBaseUrl: publicRuntimeConfig.apiBaseUrl,
+      publicApi: getAuthenticatedApi(),
+      getAuthenticatedApi,
     }
   })
   const logger = createLogger({ collapsed: true }) // log every action to see what's happening behind the scenes.

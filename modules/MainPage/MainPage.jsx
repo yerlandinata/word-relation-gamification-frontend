@@ -1,13 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Center from 'modules/shared/Center'
-import WordPair from 'modules/WordPair/WordPair'
-import { beginGame, STATE_PLAYING_GAME, STATE_MAIN_MENU, showLoginPage, STATE_LOGIN } from './reducer'
-import AnnotationList from 'modules/Annotation/AnnotationList'
+import { beginGame, STATE_PLAYING_GAME, STATE_MAIN_MENU, showLoginPage, STATE_LOGIN, STATE_PROFILE, STATE_REGISTER, showRegisterPage } from './reducer'
 import MainMenu from './components/MainMenu'
 import Login from 'modules/Login/Login'
+import Profile from 'modules/Profile/Profile'
+import Game from 'modules/Game/Game'
 
-class MainPage extends React.Component {
+class MainPageComponent extends React.Component {
 
     constructor(props) {
         super(props)
@@ -17,30 +16,14 @@ class MainPage extends React.Component {
         return (
             <div className="row justify-content-center">
                 <div className="col-md-6 col-sm-12 d-flex flex-column">
-                    {(this.props.activity == STATE_LOGIN) && <Login />}
-                    {(this.props.activity == STATE_MAIN_MENU) && <MainMenu onBeginAnon={this.props.beginGame} onBeginLogin={this.props.showLoginPage} />}
-                    {(this.props.activity == STATE_PLAYING_GAME) && this._renderGame()}
+                    {(this.props.activity == STATE_REGISTER) && <Login />}
+                    {(this.props.activity == STATE_LOGIN) && <Login isLogin />}
+                    {(this.props.activity == STATE_PROFILE) && <Profile />}
+                    {(this.props.activity == STATE_MAIN_MENU) && 
+                        <MainMenu onBeginAnon={this.props.beginGame} onBeginRegister={this.props.showRegisterPage} onBeginLogin={this.props.showLoginPage} />}
+                    {(this.props.activity == STATE_PLAYING_GAME) && <Game />}
                 </div>
             </div>
-        )
-    }
-
-    _renderGame() {
-        return (
-            <>
-                <Center className="mb-3">
-                    <h1>Ayo main kata</h1>
-                </Center>
-                <Center>
-                    <WordPair />
-                </Center>
-                <Center className="m-3">
-                    <div>Jawab:</div>
-                </Center>
-                <Center>
-                    <AnnotationList />
-                </Center>
-            </>
         )
     }
 
@@ -52,9 +35,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     beginGame: () => dispatch(beginGame()),
-    showLoginPage: () => dispatch(showLoginPage())
+    showLoginPage: () => dispatch(showLoginPage()),
+    showRegisterPage: () => dispatch(showRegisterPage()),
 })
 
-const MainPageConnected = connect(mapStateToProps, mapDispatchToProps)(MainPage)
+const MainPage = connect(mapStateToProps, mapDispatchToProps)(MainPageComponent)
 
-export default MainPageConnected
+export default MainPage

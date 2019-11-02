@@ -5,7 +5,7 @@ import Center from 'modules/shared/Center'
 
 const desc = '%a adalah sejenis %b'
 
-const WordPair = ({
+export const WordPairComponent = ({
     word1,
     word2,
     example,
@@ -23,6 +23,6 @@ const mapStateToProps = (state) => ({
     ...state.wordPairState
 })
 
-const WordPairConnected = connect(mapStateToProps)(WordPair)
+const WordPair = connect(mapStateToProps)(WordPairComponent)
 
-export default WordPairConnected
+export default WordPair
