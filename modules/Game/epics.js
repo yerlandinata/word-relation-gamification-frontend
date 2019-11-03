@@ -48,8 +48,8 @@ const postAnnotationEpic = (action$, state$, { getAuthenticatedApi }) =>
                     rank: response.player.rank
                 }, response.next_word_pair ? {
                     id: response.next_word_pair.id,
-                    lhsWord: response.next_word_pair.word_1,
-                    rhsWord: response.next_word_pair.word_2,
+                    lhsWord: response.next_word_pair.word_1.replace(/_/g, ' '),
+                    rhsWord: response.next_word_pair.word_2.replace(/_/g, ' '),
                     beginTime: (new Date()).getTime() + SCORE_UPDATE_SCREEN_TIME,
                 } : {})),
                 catchError(error => of(postAnnotationFailure(JSON.stringify(error))))

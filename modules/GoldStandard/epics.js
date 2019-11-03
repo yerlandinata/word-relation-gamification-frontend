@@ -25,8 +25,8 @@ const fetchGoldStandardEpic = (action$, state$, {publicApi}) =>
                             id: goldStandard.wrt.id,
                             description: goldStandard.wrt.short_desc,
                         },
-                        lhsWord: goldStandard.wp.word_1,
-                        rhsWord: goldStandard.wp.word_2,
+                        lhsWord: goldStandard.wp.word_1.replace(/_/g, ' '),
+                        rhsWord: goldStandard.wp.word_2.replace(/_/g, ' '),
                         wordPairId: goldStandard.wp.id,
                     })
                 ))),
