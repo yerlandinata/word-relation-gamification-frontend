@@ -14,14 +14,16 @@ class MainPageComponent extends React.Component {
 
     render() {
         return (
-            <div className="row justify-content-center">
-                <div className="col-md-6 col-sm-12 d-flex flex-column">
-                    {(this.props.activity == STATE_REGISTER) && <Login />}
-                    {(this.props.activity == STATE_LOGIN) && <Login isLogin />}
-                    {(this.props.activity == STATE_PROFILE) && <Profile />}
-                    {(this.props.activity == STATE_MAIN_MENU) && 
-                        <MainMenu onBeginAnon={this.props.beginGame} onBeginRegister={this.props.showRegisterPage} onBeginLogin={this.props.showLoginPage} />}
-                    {(this.props.activity == STATE_PLAYING_GAME) && <Game />}
+            <div className="container">
+                <div className="row justify-content-center">
+                    <div className="col-md-6 col-sm-12 d-flex flex-column">
+                        {(this.props.activity == STATE_REGISTER) && <Login />}
+                        {(this.props.activity == STATE_LOGIN) && <Login isLogin />}
+                        {(this.props.activity == STATE_PROFILE) && <Profile />}
+                        {(this.props.activity == STATE_MAIN_MENU) &&
+                            <MainMenu onBeginAnon={this.props.beginGame} onBeginRegister={this.props.showRegisterPage} onBeginLogin={this.props.showLoginPage} />}
+                        {(this.props.activity == STATE_PLAYING_GAME) && <Game />}
+                    </div>
                 </div>
             </div>
         )
