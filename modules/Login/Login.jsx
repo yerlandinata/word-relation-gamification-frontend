@@ -32,7 +32,7 @@ class LoginComponent extends React.Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="birthDate">{this.props.isLogin ? 'PIN' : 'Tanggal Lahir DDMMYYYY (contoh: 25121997)'}</label>
-                        <input className={`form-control ${this.state.isBirthDateInvalid ? 'is-invalid' : ''}`} id="birthDate" placeholder="25121997" value={this.state.birthDate} onChange={this._onBirthDateChange} />
+                        <input type="tel" className={`form-control ${this.state.isBirthDateInvalid ? 'is-invalid' : ''}`} id="birthDate" placeholder="25121997" value={this.state.birthDate} onChange={this._onBirthDateChange} />
                     </div>
                     <button
                         type="submit"
