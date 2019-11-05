@@ -10,7 +10,7 @@ const GoldStandardComponent = ({ sampleGoldStandards, isLoading, resample }) => 
             sampleGoldStandards.map(
                 ({ lhsWord, rhsWord, wordRelationType }, i) =>
                     <Center className="m-2" key={i}>
-                        {lhsWord} {Object.values(WORD_RELATION_TYPES).filter(wrt => wrt.id == wordRelationType.id)[0].symbol} {rhsWord}
+                        {lhsWord} <span className="h5 ml-1 mr-1">{Object.values(WORD_RELATION_TYPES).filter(wrt => wrt.id == wordRelationType.id)[0].symbol}</span> {rhsWord}
                     </Center>
             )
         }</div>

@@ -84,7 +84,7 @@ class LoginComponent extends React.Component {
 
     _onSubmitLoginAnonymous() {
         event.preventDefault()
-        this.props.submitLogin((new Date()).getTime() % 1000003, 1234)
+        this.props.submitLogin((new Date()).getTime() % 1000003, 12345678)
     }
 }
 

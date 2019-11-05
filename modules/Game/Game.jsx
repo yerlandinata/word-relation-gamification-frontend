@@ -12,8 +12,6 @@ class GameComponent extends React.Component {
 
         this.state = {
             displayHelp: false,
-            highlightHelp: true,
-            blinkHelp: null,
         }
 
         this._onSubmitAnnotation = this._onSubmitAnnotation.bind(this)
@@ -22,10 +20,8 @@ class GameComponent extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({
-            ...this.state,
-            blinkHelp: setInterval(() => this.setState({ highlightHelp: !this.state.highlightHelp }), 1000)
-        })
+        setTimeout(() => this.setState({displayHelp: true}), 3000)
+        setTimeout(() => this.setState({displayHelp: false}), 18000)
     }
 
     render() {
@@ -48,7 +44,7 @@ class GameComponent extends React.Component {
                         </button>
                     ) : (
                             <button
-                                className={`btn btn-sm btn${this.state.highlightHelp ? '' : '-outline'}-info m-2`}
+                                className={`btn btn-sm btn-info m-2`}
                                 onClick={this._onShowHelp}
                             >
                                 Bantuan permainan
@@ -56,7 +52,7 @@ class GameComponent extends React.Component {
                         )}
                 </Center>
                 <Center className="m-3">
-                    <div>Pilih yang tepat:</div>
+                    {!this.state.displayHelp && <div>Pilih yang tepat:</div>}
                 </Center>
                 <Center className="container-fluid d-flex flex-column">
                     {this.state.displayHelp ? this._renderHelp() : this._renderChoices()}
@@ -67,16 +63,13 @@ class GameComponent extends React.Component {
 
     _onShowHelp() {
         setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 500)
-        clearInterval(this.state.blinkHelp)
         this.setState({
-            highlightHelp: false,
             displayHelp: true,
         })
     }
 
     _onHideHelp() {
         this.setState({
-            highlightHelp: false,
             displayHelp: false,
         })
     }
@@ -86,7 +79,7 @@ class GameComponent extends React.Component {
             <div>
                 <div className="m-3">
                     <Center>
-                        kucing &#x21d2; binatang
+                        kucing <span className="h5 ml-1 mr-1">&#x21d2;</span> binatang
                     </Center>
                     <Center>
                         kucing adalah sejenis binatang
@@ -94,7 +87,7 @@ class GameComponent extends React.Component {
                 </div>
                 <div className="m-3">
                     <Center>
-                        hewan &#x21d4; binatang
+                        hewan <span className="h5 ml-1 mr-1">&#x21d4;</span> binatang
                     </Center>
                     <Center>
                         hewan sama artinya dengan binatang
@@ -102,7 +95,7 @@ class GameComponent extends React.Component {
                 </div>
                 <div className="m-3">
                     <Center className="m-2">
-                        kabel &#x21cf; bintang
+                        kabel <span className="h5 ml-1 mr-1">&#x21cf;</span> bintang
                     </Center>
                     <Center>
                         kabel bukan sejenis bintang dan
@@ -137,7 +130,7 @@ class GameComponent extends React.Component {
                             onClick={this._onSubmitAnnotation(wrt.id)}
                         > {(
                             wrt.id != WORD_RELATION_TYPES.SKIP.id ?
-                                (<>{this.props.targetPair.lhsWord} {wrt.symbol} {this.props.targetPair.rhsWord} </>) :
+                                (<>{this.props.targetPair.lhsWord} <span className="h5">{wrt.symbol}</span> {this.props.targetPair.rhsWord} </>) :
                                 (<>skip</>)
                         )}
                         </button>
