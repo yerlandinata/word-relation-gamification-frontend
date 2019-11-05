@@ -20,7 +20,7 @@ class GameComponent extends React.Component {
     }
 
     componentDidMount() {
-        setTimeout(() => this.setState({displayHelp: true}), 3000)
+        setTimeout(() => this.setState({displayHelp: true}), 5000)
         setTimeout(() => this.setState({displayHelp: false}), 18000)
     }
 
