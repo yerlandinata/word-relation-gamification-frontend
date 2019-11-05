@@ -1,5 +1,5 @@
 import { ofType, combineEpics } from 'redux-observable'
-import { mapTo, mergeMap, map, catchError, debounceTime } from 'rxjs/operators'
+import { mapTo, mergeMap, map, catchError, debounceTime, filter } from 'rxjs/operators'
 import { fetchPair, FETCH_PAIR, fetchPairSuccess, fetchPairFailure, postAnnotationSuccess, postAnnotationFailure, POST_ANNOTATION, POST_ANNOTATION_SUCCESS, SHOW_SCORE, hideAddedScore, showAddedScore } from './reducer'
 import { BEGIN_GAME } from 'modules/MainPage/reducer'
 import { of } from 'rxjs'
@@ -72,12 +72,38 @@ const hideAddedScoreEpic = (action$) =>
         map(action => hideAddedScore())
     )
 
+const scoreUpdateSoundEffectsEpic = (action$) =>
+    action$.pipe(
+        ofType(SHOW_SCORE),
+        map(action => {
+            let sfxUrl
+            switch (action.payload.score) {
+                case 1:
+                    sfxUrl = 'https://freesound.org/data/previews/131/131660_2398403-lq.mp3'
+                    break;
+                case 2:
+                    sfxUrl = 'https://freesound.org/data/previews/397/397355_4284968-lq.mp3'
+                    break;
+                case -1:
+                    sfxUrl = 'https://freesound.org/data/previews/331/331912_3248244-lq.mp3'
+                    break;
+                default:
+                    break;
+            }
+            if (sfxUrl) {
+                new Audio(sfxUrl).play()
+            }
+            return {type: 'NOP'}
+        })
+    )
+
 const gameEpics = combineEpics(
     beginGameEpic,
     fetchPairEpic,
     postAnnotationEpic,
     triggerShowAddedScoreEpic,
     hideAddedScoreEpic,
+    scoreUpdateSoundEffectsEpic,
 )
 
 export default gameEpics
