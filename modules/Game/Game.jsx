@@ -100,7 +100,7 @@ class GameComponent extends React.Component {
                     <Center>
                         kabel bukan sejenis bintang dan
                     </Center>
-                    <Center>
+                    <Center className="text-center">
                         kabel tidak sama artinya dengan bintang
                     </Center>
                 </div>
