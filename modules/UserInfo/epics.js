@@ -1,9 +1,9 @@
-import { ofType, combineEpics, ActionsObservable } from "redux-observable";
+import { ofType, combineEpics } from "redux-observable";
 import { POST_PROFILE_SUCCESS } from "modules/Profile/reducer";
 import { map, debounceTime } from "rxjs/operators";
-import { updateUserInfo, UPDATE_USER_INFO } from "./reducer";
+import { updateUserInfo } from "./reducer";
 import { POST_LOGIN_SUCCESS } from "modules/Login/reducer";
-import { POST_ANNOTATION_SUCCESS, showAddedScore, SHOW_SCORE, hideAddedScore } from "modules/Game/reducer";
+import { POST_ANNOTATION_SUCCESS, RESTART_GAME } from "modules/Game/reducer";
 
 const newProfileEpic = (action$) =>
     action$.pipe(
@@ -34,10 +34,21 @@ const postAnnotationSuccessEpic = (action$) =>
         map(action => updateUserInfo(action.payload.player))
     )
 
+const resetScoreEpic = (action$) =>
+    action$.pipe(
+        ofType(RESTART_GAME),
+        map(() => updateUserInfo({
+            score: 0,
+            rank: 'unranked',
+            elapsedTime: 0,
+        }))
+    )
+
 const userInfoEpics = combineEpics(
     newProfileEpic,
     loginProfileEpic,
     postAnnotationSuccessEpic,
+    resetScoreEpic,
 )
 
 export default userInfoEpics

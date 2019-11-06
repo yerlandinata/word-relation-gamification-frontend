@@ -1,6 +1,6 @@
 import { ofType, combineEpics } from 'redux-observable'
 import { mapTo, mergeMap, map, catchError, debounceTime, filter } from 'rxjs/operators'
-import { fetchPair, FETCH_PAIR, fetchPairSuccess, fetchPairFailure, postAnnotationSuccess, postAnnotationFailure, POST_ANNOTATION, POST_ANNOTATION_SUCCESS, SHOW_SCORE, hideAddedScore, showAddedScore } from './reducer'
+import { fetchPair, FETCH_PAIR, fetchPairSuccess, fetchPairFailure, postAnnotationSuccess, postAnnotationFailure, POST_ANNOTATION, POST_ANNOTATION_SUCCESS, SHOW_SCORE, hideAddedScore, showAddedScore, RESTART_GAME } from './reducer'
 import { BEGIN_GAME } from 'modules/MainPage/reducer'
 import { of } from 'rxjs'
 
@@ -32,6 +32,26 @@ const fetchPairEpic = (action$, state$, { getAuthenticatedApi }) =>
         )
     )
 
+const restartGameEpic = (action$, state$, { getAuthenticatedApi }) =>
+    action$.pipe(
+        ofType(RESTART_GAME),
+        mergeMap(
+            action =>
+                getAuthenticatedApi(
+                    state$.value.userInfoState.token
+                ).post('users/restart_game', {}).pipe(
+                    map(({ response }) => fetchPairSuccess({
+                        id: response.id,
+                        lhsWord: response.word_1,
+                        rhsWord: response.word_2,
+                        beginTime: (new Date()).getTime(),
+                    })),
+                    catchError(error => of(fetchPairFailure(error.xhr.response)))
+                )
+
+        )
+    )
+
 const postAnnotationEpic = (action$, state$, { getAuthenticatedApi }) =>
     action$.pipe(
         ofType(POST_ANNOTATION),
@@ -45,7 +65,8 @@ const postAnnotationEpic = (action$, state$, { getAuthenticatedApi }) =>
             }).pipe(
                 map(({ response }) => postAnnotationSuccess({
                     score: response.player.score,
-                    rank: response.player.rank
+                    rank: response.player.rank,
+                    elapsedTime: response.player.elapsed,
                 }, response.next_word_pair ? {
                     id: response.next_word_pair.id,
                     lhsWord: response.next_word_pair.word_1.replace(/_/g, ' '),
@@ -104,6 +125,7 @@ const gameEpics = combineEpics(
     triggerShowAddedScoreEpic,
     hideAddedScoreEpic,
     scoreUpdateSoundEffectsEpic,
+    restartGameEpic,
 )
 
 export default gameEpics

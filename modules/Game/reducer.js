@@ -6,11 +6,17 @@ export const POST_ANNOTATION = 'Annotation/POST'
 export const POST_ANNOTATION_SUCCESS = 'Annotation/POST_SUCCESS'
 export const POST_ANNOTATION_FAILURE = 'Annotation/POST_FAILURE'
 
+export const RESTART_GAME = 'Game/RESTART'
+
 export const SHOW_SCORE = 'Score/SHOW'
 export const HIDE_SCORE = 'Score/HIDE'
 
 export const fetchPair = () => ({
     type: FETCH_PAIR,
+})
+
+export const restartGame = () => ({
+    type: RESTART_GAME,
 })
 
 export const fetchPairSuccess = ({id, lhsWord, rhsWord, beginTime}) => ({
@@ -28,10 +34,10 @@ export const postAnnotation = (wordPairId, wordRelationTypeId, time) => ({
     payload: { wordPairId, wordRelationTypeId, time }
 })
 
-export const postAnnotationSuccess = ({score, rank}, {id, lhsWord, rhsWord, beginTime}) => ({
+export const postAnnotationSuccess = ({score, rank, elapsedTime}, {id, lhsWord, rhsWord, beginTime}) => ({
     type: POST_ANNOTATION_SUCCESS,
     payload: {
-        player: {score, rank},
+        player: {score, rank, elapsedTime},
         nextWordPair: id ? {id, lhsWord, rhsWord, beginTime} : null,
     }
 })

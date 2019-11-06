@@ -4,7 +4,7 @@ import UserInfo from 'modules/UserInfo/UserInfo'
 import Center from 'modules/shared/Center'
 import { WORD_RELATION_TYPES } from './constants'
 import GoldStandard from 'modules/GoldStandard/GoldStandard'
-import { postAnnotation } from './reducer'
+import { postAnnotation, restartGame } from './reducer'
 
 class GameComponent extends React.Component {
     constructor(props) {
@@ -20,7 +20,7 @@ class GameComponent extends React.Component {
     }
 
     componentDidMount() {
-        setTimeout(() => this.setState({displayHelp: true}), 5000)
+        setTimeout(() => this.setState({displayHelp: true}), 4000)
         setTimeout(() => this.setState({displayHelp: false}), 18000)
     }
 
@@ -104,7 +104,6 @@ class GameComponent extends React.Component {
                         kabel tidak sama artinya dengan bintang
                     </Center>
                 </div>
-                <Center className="mt-4 text-center">5 pemain dengan skor minimal 100 akan diundi untuk mendapatkan hadiah</Center>
                 <Center className="mt-2 text-center">5 pemain dengan skor tertinggi berhak mendapatkan hadiah tanpa diundi</Center>
             </div>
         )
@@ -118,7 +117,19 @@ class GameComponent extends React.Component {
                 {this.props.addedScore > 0 && '+'} <h3>{this.props.addedScore}</h3>
             </Center>
         } else if (!this.props.targetPair) {
-            return <Center>Permainan selesai :)</Center>
+            return (
+                <div>
+                    <Center className="m-3">Permainan selesai :)</Center>
+                    <Center>Skor: {this.props.userInfo.score}</Center>
+                    <Center>Ranking: {this.props.userInfo.rank}</Center>
+                    <Center className="m-3 text-center">Login gunakan no. HP dan tgl lahir untuk cek ranking lain kali!</Center>
+                    <Center className="m-3">
+                        <button className="btn btn-primary" onClick={this.props.restartGame}>
+                            Reset Score dan Main Lagi!
+                        </button>
+                    </Center>
+                </div>
+            )
         }
         return (
             <>{
@@ -149,10 +160,12 @@ class GameComponent extends React.Component {
 
 const mapStateToProps = (state) => ({
     ...state.gameState,
+    userInfo: state.userInfoState,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    submitAnnotation: (wordPairId, wordRelationTypeId, time) => dispatch(postAnnotation(wordPairId, wordRelationTypeId, time))
+    submitAnnotation: (wordPairId, wordRelationTypeId, time) => dispatch(postAnnotation(wordPairId, wordRelationTypeId, time)),
+    restartGame: () => dispatch(restartGame()),
 })
 
 const Game = connect(mapStateToProps, mapDispatchToProps)(GameComponent)

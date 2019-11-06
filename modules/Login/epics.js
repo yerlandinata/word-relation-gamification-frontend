@@ -31,6 +31,7 @@ const loginEpic = (action$, state$, {publicApi}) =>
                                     birthDate: response.user.birth_date,
                                     score: response.user.score,
                                     rank: response.user.rank,
+                                    elapsedTime: response.user.elapsed,
                                 }, response.token)
                             case WRONG_ID_BIRTH_DATE:
                                 return postLoginFailure()
