@@ -31,10 +31,11 @@ const decideProgressBarColor = (elapsedTime) => {
 }
 
 const displayRemainingTime = (elapsedTime) => {
+    const percentage = calculateTimePercentage(elapsedTime)
     const remainingMinutes = Math.floor((publicRuntimeConfig.gameTimeLimitMs - elapsedTime) / 60000)
-    if (remainingMinutes > 6) {
+    if (percentage > 60) {
         return `${remainingMinutes} menit`
-    } else if (remainingMinutes > 3) {
+    } else if (percentage > 30) {
         return `> ${remainingMinutes} mnt.`
     } else {
         return `< ${remainingMinutes + 1} m.`
