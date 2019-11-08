@@ -25,7 +25,7 @@ class ProfileComponent extends React.Component {
             <div className="container-fluid">
                 <Center className="m-3">
                     {!this._isAnonymous() && <p className="text-center">Ayo kita berkenalan ;)</p>}
-                    {this._isAnonymous() && <p className="text-center">Pemain anonim tidak bisa mendapatkan hadiah.</p>}
+                    {this._isAnonymous() && <p className="text-center text-danger">Pemain anonim tidak bisa mendapatkan hadiah :(</p>}
                 </Center>
                 <form className="d-flex flex-column">
                     <div className="form-group">
@@ -67,7 +67,7 @@ class ProfileComponent extends React.Component {
     }
 
     _isAnonymous() {
-        return this.props.birthDate == 1
+        return this.props.birthDate == 12345678
     }
 
     _onEducationLevelChange(event) {

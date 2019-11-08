@@ -6,12 +6,6 @@ import { of } from 'rxjs'
 
 const SCORE_UPDATE_SCREEN_TIME = 1500
 
-const beginGameEpic = (action$) =>
-    action$.pipe(
-        ofType(BEGIN_GAME),
-        mapTo(fetchPair())
-    )
-
 const fetchPairEpic = (action$, state$, { getAuthenticatedApi }) =>
     action$.pipe(
         ofType(FETCH_PAIR),
@@ -119,7 +113,6 @@ const scoreUpdateSoundEffectsEpic = (action$) =>
     )
 
 const gameEpics = combineEpics(
-    beginGameEpic,
     fetchPairEpic,
     postAnnotationEpic,
     triggerShowAddedScoreEpic,

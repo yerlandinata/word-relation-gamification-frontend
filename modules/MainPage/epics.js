@@ -1,5 +1,5 @@
 import { combineEpics, ofType } from "redux-observable";
-import { mapTo } from "rxjs/operators";
+import { mapTo, debounceTime } from "rxjs/operators";
 import { beginGame } from "./reducer";
 import { POST_LOGIN_SUCCESS } from "modules/Login/reducer";
 import { POST_PROFILE_SUCCESS } from "modules/Profile/reducer";
@@ -7,6 +7,7 @@ import { POST_PROFILE_SUCCESS } from "modules/Profile/reducer";
 const createBeginGameEpic = (actionType) => (action$) =>
     action$.pipe(
         ofType(actionType),
+        debounceTime(100),
         mapTo(beginGame())
     )
 

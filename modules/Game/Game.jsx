@@ -4,7 +4,8 @@ import UserInfo from 'modules/UserInfo/UserInfo'
 import Center from 'modules/shared/Center'
 import { WORD_RELATION_TYPES } from './constants'
 import GoldStandard from 'modules/GoldStandard/GoldStandard'
-import { postAnnotation, restartGame } from './reducer'
+import { postAnnotation, restartGame, fetchPair } from './reducer'
+import Tutorial from './components/Tutorial'
 
 class GameComponent extends React.Component {
     constructor(props) {
@@ -12,20 +13,25 @@ class GameComponent extends React.Component {
 
         this.state = {
             displayHelp: false,
+            showTutorial: false,
         }
 
         this._onSubmitAnnotation = this._onSubmitAnnotation.bind(this)
         this._onShowHelp = this._onShowHelp.bind(this)
         this._onHideHelp = this._onHideHelp.bind(this)
+        this._onExitTutorial = this._onExitTutorial.bind(this)
     }
 
     componentDidMount() {
-        setTimeout(() => this.setState({displayHelp: true}), 4000)
-        setTimeout(() => this.setState({displayHelp: false}), 18000)
+        if (this.props.userInfo.score == 0) {
+            this.setState({showTutorial: true})
+        } else {
+            this.props.fetchFirstPair()
+        }
     }
 
     render() {
-        return (
+        return this.state.showTutorial ? <Tutorial onExit={this._onExitTutorial} /> : (
             <div className="d-flex flex-column">
                 <div className="container mb-3">
                     <UserInfo />
@@ -59,6 +65,11 @@ class GameComponent extends React.Component {
                 </Center>
             </div>
         )
+    }
+
+    _onExitTutorial() {
+        this.setState({showTutorial: false})
+        this.props.fetchFirstPair()
     }
 
     _onShowHelp() {
@@ -104,7 +115,6 @@ class GameComponent extends React.Component {
                         kabel tidak sama artinya dengan bintang
                     </Center>
                 </div>
-                <Center className="mt-2 text-center">5 pemain dengan skor tertinggi berhak mendapatkan hadiah tanpa diundi</Center>
             </div>
         )
     }
@@ -166,6 +176,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     submitAnnotation: (wordPairId, wordRelationTypeId, time) => dispatch(postAnnotation(wordPairId, wordRelationTypeId, time)),
     restartGame: () => dispatch(restartGame()),
+    fetchFirstPair: () => dispatch(fetchPair())
 })
 
 const Game = connect(mapStateToProps, mapDispatchToProps)(GameComponent)

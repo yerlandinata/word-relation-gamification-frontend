@@ -7,6 +7,7 @@ import {
 } from "./reducer";
 import { of } from "rxjs";
 import { WORD_RELATION_TYPES } from "modules/Game/constants";
+import { FETCH_PAIR_SUCCESS, POST_ANNOTATION_SUCCESS } from "modules/Game/reducer";
 
 const beginGameEpic = (action$) => 
     action$.pipe(
@@ -66,11 +67,37 @@ const resampleGoldStandardEpic = (action$, state$) =>
         )
     )
 
+const updateGoldStandardEpicFirstFetchPair = (action$, state$) =>
+    action$.pipe(
+        ofType(FETCH_PAIR_SUCCESS),
+        map(
+            ({payload}) => fetchGoldStandardSuccess(
+                state$.value.goldStandardState.allGoldStandards.filter(
+                    goldStandard => goldStandard.lhsWord != payload.lhsWord && goldStandard.rhsWord != payload.rhsWord
+                )
+            )
+        )
+    )
+
+const updateGoldStandardEpicNextPairs = (action$, state$) =>
+    action$.pipe(
+        ofType(POST_ANNOTATION_SUCCESS),
+        map(
+            ({payload}) => fetchGoldStandardSuccess(
+                state$.value.goldStandardState.allGoldStandards.filter(
+                    goldStandard => goldStandard.lhsWord != payload.nextWordPair.lhsWord && goldStandard.rhsWord != payload.nextWordPair.rhsWord
+                )
+            )
+        )
+    )
+
 const goldStandardEpics = combineEpics(
     beginGameEpic,
     fetchGoldStandardEpic,
     setSampleGoldStandardEpic,
     resampleGoldStandardEpic,
+    updateGoldStandardEpicFirstFetchPair,
+    updateGoldStandardEpicNextPairs,
 )
 
 export default goldStandardEpics
