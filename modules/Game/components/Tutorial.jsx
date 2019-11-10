@@ -178,19 +178,19 @@ class Tutorial extends React.Component {
                 </div>
                 <Center className="mt-3 mb-2 d-flex flex-column">
                     <p className="text-center">
-                        Skor, ranking, dan sisa waktu ditampilkan di bagian atas layar Kamu. <br/>
-                        Jika Kamu berhasil mencapai ranking final 10 besar, maka Kamu berhak mendapatkan hadiah berupa voucher GOPAY/OVO senilai Rp25.000. <br/>
-                        Tetapi, ranking final dihitung di akhir bulan November 2019 <br/>
-                        Jadi, ranking yang ditampilkan sekarang hanyalah ranking sementara. <br/>
-                        Kamu bisa kembali lagi dan login lain kali untuk mengecek ranking kamu. <br/>
+                        Jika Kamu berhasil mencapai ranking final 10 besar, maka Kamu berhak mendapatkan hadiah berupa voucher GOPAY/OVO senilai Rp25.000. <br />
+                        Tetapi, ranking final dihitung di akhir bulan November 2019 <br />
+                        Kamu bisa kembali lagi dan login lain kali untuk mengecek ranking kamu. <br />
                         Jika ranking Kamu turun, Kamu bisa coba bermain lagi!
-                    </p>
-                    <p className="text-center">
-                        <i>Di akhir permainan, Kamu akan dimintai nomor HP. Jika kamu tidak memberikannya, hadiahnya tidak bisa dikirim</i>
                     </p>
                 </Center>
                 <Center>
                     {this._renderNavButtons()}
+                </Center>
+                <Center>
+                    <p className="text-center">
+                        <i>Di akhir permainan, Kamu akan dimintai nomor HP. Jika kamu tidak memberikannya, hadiahnya tidak bisa dikirim</i>
+                    </p>
                 </Center>
             </div>
         )
