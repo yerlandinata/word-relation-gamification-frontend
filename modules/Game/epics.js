@@ -86,19 +86,20 @@ const hideAddedScoreEpic = (action$) =>
         map(action => hideAddedScore())
     )
 
-const scoreUpdateSoundEffectsEpic = (action$) =>
+const scoreUpdateSoundEffectsEpic = (action$, state$) =>
     action$.pipe(
         ofType(SHOW_SCORE),
         map(action => {
             let sfxUrl
+            const level = state$.value.userInfoState.level
             switch (action.payload.score) {
-                case 1:
+                case 1 * level:
                     sfxUrl = 'https://freesound.org/data/previews/131/131660_2398403-lq.mp3'
                     break;
-                case 2:
+                case 2 * level:
                     sfxUrl = 'https://freesound.org/data/previews/397/397355_4284968-lq.mp3'
                     break;
-                case -1:
+                case -1 * level:
                     sfxUrl = 'https://freesound.org/data/previews/331/331912_3248244-lq.mp3'
                     break;
                 default:
