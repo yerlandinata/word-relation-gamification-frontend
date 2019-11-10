@@ -7,6 +7,7 @@ import GoldStandard from 'modules/GoldStandard/GoldStandard'
 import { postAnnotation, restartGame, fetchPair } from './reducer'
 import Tutorial from './components/Tutorial'
 import { showSetPhoneNumberPage } from 'modules/MainPage/reducer'
+import Rankings from 'modules/Rankings/Rankings'
 
 class GameComponent extends React.Component {
     constructor(props) {
@@ -107,6 +108,9 @@ class GameComponent extends React.Component {
                             Lanjut ke level berikutnya
                         </button>
                     </Center>
+                    <div className="mt-3">
+                        <Rankings />
+                    </div> 
                 </div>
             )
         }

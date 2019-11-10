@@ -18,6 +18,8 @@ import goldStandardEpics from 'modules/GoldStandard/epics'
 import gameEpics from 'modules/Game/epics'
 import phoneNumberReducer from 'modules/PhoneNumber/reducer'
 import phoneNumberEpics from 'modules/PhoneNumber/epics'
+import rankingReducer from 'modules/Rankings/reducer'
+import rankingsEpics from 'modules/Rankings/epics'
 
 const rootReducer = combineReducers({
   mainPageState: mainPageReducer,
@@ -26,7 +28,8 @@ const rootReducer = combineReducers({
   userInfoState: userInfoReducer,
   goldStandardState: goldStandardReducer,
   gameState: gameReducer,
-  phoneNumberState: phoneNumberReducer
+  phoneNumberState: phoneNumberReducer,
+  rankingState: rankingReducer,
 })
 
 const rootEpic = combineEpics(
@@ -37,6 +40,7 @@ const rootEpic = combineEpics(
   goldStandardEpics,
   gameEpics,
   phoneNumberEpics,
+  rankingsEpics,
 )
 
 export default function initStore (initialState) {
