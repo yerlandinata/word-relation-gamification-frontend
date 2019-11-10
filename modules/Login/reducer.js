@@ -18,19 +18,26 @@ export const postLoginFailure = (error) => ({
 })
 
 const INITIAL_STATE = {
-    isLoading: false
+    isLoading: false,
+    isError: false,
 }
 
 const reducer = (state = INITIAL_STATE, { type }) => {
     switch (type) {
         case POST_LOGIN:
             return {
-                isLoading: true
+                isLoading: true,
+                isError: false,
             }
         case POST_LOGIN_FAILURE:
+            return {
+                isLoading: false,
+                isError: true,
+            }
         case POST_LOGIN_SUCCESS:
             return {
-                isLoading: false
+                isLoading: false,
+                isError: false,
             }
         default:
             return state

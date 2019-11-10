@@ -18,7 +18,6 @@ class LoginComponent extends React.Component {
         this._onBirthDateChange = this._onBirthDateChange.bind(this)
         this._onPhoneChange = this._onPhoneChange.bind(this)
         this._onSubmitLogin = this._onSubmitLogin.bind(this)
-        this._onSubmitLoginAnonymous = this._onSubmitLoginAnonymous.bind(this)
     }
 
     render() {
@@ -27,11 +26,11 @@ class LoginComponent extends React.Component {
 
                 <form className="d-flex flex-column">
                     <div className="form-group">
-                        <label htmlFor="phoneNumber">{this.props.isLogin ? 'Player ID' : 'No. HP'}</label>
+                        <label htmlFor="phoneNumber">No. HP</label>
                         <input type="tel" className={`form-control ${this.state.isPhoneInvalid ? 'is-invalid' : ''}`} id="phoneNumber" placeholder="08123456789" value={this.state.phoneNumber} onChange={this._onPhoneChange} />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="birthDate">{this.props.isLogin ? 'PIN' : 'Tanggal Lahir DDMMYYYY (contoh: 25121997)'}</label>
+                        <label htmlFor="birthDate">Tanggal Lahir DDMMYYYY (contoh: 25121997)</label>
                         <input type="tel" className={`form-control ${this.state.isBirthDateInvalid ? 'is-invalid' : ''}`} id="birthDate" placeholder="25121997" value={this.state.birthDate} onChange={this._onBirthDateChange} />
                     </div>
                     <button
@@ -42,16 +41,10 @@ class LoginComponent extends React.Component {
                     >
                         Lanjut
                     </button>
-                    {!this.props.isLogin && <button
-                        className="btn btn-outline-primary m-2"
-                        onClick={this._onSubmitLoginAnonymous}
-                    >
-                        Lanjut sebagai anonim
-                    </button>}
                 </form>
+                {this.props.isError && <Center className="text-danger">No. HP atau tanggal lahir salah</Center>}
                 <Center className="mt-2 d-flex flex-column">
                     {!this.props.isLogin ? (<p className="text-center">Permainan ini berhadiah!</p>) : (<p className="text-center">Selamat datang kembali!</p>)}
-                    <p className="text-center">Tanggal lahir digunakan sebagai PIN pemain untuk melanjutkan permainan</p>
                 </Center>
             </div>
         )
@@ -82,10 +75,6 @@ class LoginComponent extends React.Component {
         }
     }
 
-    _onSubmitLoginAnonymous() {
-        event.preventDefault()
-        this.props.submitLogin((new Date()).getTime() % 1000003, 12345678)
-    }
 }
 
 const mapStateToProps = (state, ownProps) => ({

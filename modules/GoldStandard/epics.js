@@ -1,6 +1,6 @@
 import { ofType, combineEpics } from "redux-observable";
 import { BEGIN_GAME } from "modules/MainPage/reducer";
-import { mapTo, mergeMap, map, catchError } from "rxjs/operators";
+import { mapTo, mergeMap, map, catchError, filter } from "rxjs/operators";
 import {
     fethcGoldStandard, FETCH_GOLD_STANDARD, fetchGoldStandardSuccess,
     fetchGoldStandardFailure, FETCH_GOLD_STANDARD_SUCCESS, setSampleGoldStandard, RESAMPLE_GOLD_STANDARD
@@ -82,6 +82,7 @@ const updateGoldStandardEpicFirstFetchPair = (action$, state$) =>
 const updateGoldStandardEpicNextPairs = (action$, state$) =>
     action$.pipe(
         ofType(POST_ANNOTATION_SUCCESS),
+        filter(({payload}) => payload.nextWordPair),
         map(
             ({payload}) => fetchGoldStandardSuccess(
                 state$.value.goldStandardState.allGoldStandards.filter(

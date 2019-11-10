@@ -4,6 +4,7 @@ import { map, debounceTime } from "rxjs/operators";
 import { updateUserInfo } from "./reducer";
 import { POST_LOGIN_SUCCESS } from "modules/Login/reducer";
 import { POST_ANNOTATION_SUCCESS, RESTART_GAME } from "modules/Game/reducer";
+import { POST_PHONE_NUMBER_SUCCESS } from "modules/PhoneNumber/reducer";
 
 const newProfileEpic = (action$) =>
     action$.pipe(
@@ -27,6 +28,17 @@ const loginProfileEpic = (action$) =>
         )
     )
 
+const changePhoneNumberSuccessEpic = (action$) =>
+    action$.pipe(
+        ofType(POST_PHONE_NUMBER_SUCCESS),
+        map(action =>
+            updateUserInfo({
+                phoneNumber: action.payload.phoneNumber,
+                token: action.payload.token,
+            })
+        )
+    )
+
 const postAnnotationSuccessEpic = (action$) =>
     action$.pipe(
         ofType(POST_ANNOTATION_SUCCESS),
@@ -34,13 +46,14 @@ const postAnnotationSuccessEpic = (action$) =>
         map(action => updateUserInfo(action.payload.player))
     )
 
-const resetScoreEpic = (action$) =>
+const resetScoreEpic = (action$, state$) =>
     action$.pipe(
         ofType(RESTART_GAME),
         map(() => updateUserInfo({
             score: 0,
             rank: 'unranked',
             elapsedTime: 0,
+            level: state$.value.userInfoState.level + 1,
         }))
     )
 
@@ -49,6 +62,7 @@ const userInfoEpics = combineEpics(
     loginProfileEpic,
     postAnnotationSuccessEpic,
     resetScoreEpic,
+    changePhoneNumberSuccessEpic,
 )
 
 export default userInfoEpics

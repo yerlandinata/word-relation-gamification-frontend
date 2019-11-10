@@ -3,6 +3,7 @@ import { mapTo, debounceTime } from "rxjs/operators";
 import { beginGame } from "./reducer";
 import { POST_LOGIN_SUCCESS } from "modules/Login/reducer";
 import { POST_PROFILE_SUCCESS } from "modules/Profile/reducer";
+import { POST_PHONE_NUMBER_SUCCESS } from "modules/PhoneNumber/reducer";
 
 const createBeginGameEpic = (actionType) => (action$) =>
     action$.pipe(
@@ -14,6 +15,7 @@ const createBeginGameEpic = (actionType) => (action$) =>
 const beginGameEpic = combineEpics(
     createBeginGameEpic(POST_LOGIN_SUCCESS),
     createBeginGameEpic(POST_PROFILE_SUCCESS),
+    createBeginGameEpic(POST_PHONE_NUMBER_SUCCESS),
 )
 
 const mainPageEpics = combineEpics(

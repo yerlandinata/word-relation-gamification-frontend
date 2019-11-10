@@ -1,14 +1,7 @@
-import { PROFILE_PAGE } from "modules/MainPage/reducer";
 import { ofType, combineEpics } from "redux-observable";
 import { map, mergeMap, catchError } from "rxjs/operators";
-import { initProfile, POST_PROFILE, postProfileSuccess, postProfileFailure } from "./reducer";
+import { POST_PROFILE, postProfileSuccess, postProfileFailure } from "./reducer";
 import { of } from "rxjs";
-
-const initProfileEpic = (action$) =>
-    action$.pipe(
-        ofType(PROFILE_PAGE),
-        map(action => initProfile(action.payload.phoneNumber, action.payload.birthDate))
-    )
 
 const postProfileEpic = (action$, state$, {publicApi}) =>
     action$.pipe(
@@ -40,7 +33,6 @@ const postProfileEpic = (action$, state$, {publicApi}) =>
     )
 
 const profileEpics = combineEpics(
-    initProfileEpic,
     postProfileEpic,
 )
 

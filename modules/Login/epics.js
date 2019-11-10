@@ -1,15 +1,9 @@
-import { POST_LOGIN, postLoginSuccess, postLoginFailure } from "./reducer"
-import { ofType, combineEpics } from "redux-observable"
-import { mergeMap, map, catchError } from "rxjs/operators"
-import { request } from "universal-rxjs-ajax"
-import { ajax } from 'rxjs/ajax'
-import { of } from "rxjs"
-import { showEditProfilePage } from "modules/MainPage/reducer"
-
-const createXHR = () => new XMLHttpRequest()
+import { POST_LOGIN, postLoginSuccess, postLoginFailure } from './reducer'
+import { ofType, combineEpics } from 'redux-observable'
+import { mergeMap, map, catchError } from 'rxjs/operators'
+import { of } from 'rxjs'
 
 const LOGIN_OK = 1
-const USER_DOES_NOT_EXISTS = 2
 const WRONG_ID_BIRTH_DATE = 3
 
 const loginEpic = (action$, state$, {publicApi}) =>
@@ -32,11 +26,10 @@ const loginEpic = (action$, state$, {publicApi}) =>
                                     score: response.user.score,
                                     rank: response.user.rank,
                                     elapsedTime: response.user.elapsed,
+                                    level: response.user.level,
                                 }, response.token)
                             case WRONG_ID_BIRTH_DATE:
                                 return postLoginFailure()
-                            case USER_DOES_NOT_EXISTS:
-                                return showEditProfilePage(action.payload.phoneNumber, action.payload.birthDate)
                         }
                     }
                 ),

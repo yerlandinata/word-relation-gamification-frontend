@@ -1,7 +1,6 @@
 import { ofType, combineEpics } from 'redux-observable'
-import { mapTo, mergeMap, map, catchError, debounceTime, filter } from 'rxjs/operators'
-import { fetchPair, FETCH_PAIR, fetchPairSuccess, fetchPairFailure, postAnnotationSuccess, postAnnotationFailure, POST_ANNOTATION, POST_ANNOTATION_SUCCESS, SHOW_SCORE, hideAddedScore, showAddedScore, RESTART_GAME } from './reducer'
-import { BEGIN_GAME } from 'modules/MainPage/reducer'
+import { mergeMap, map, catchError, debounceTime } from 'rxjs/operators'
+import { FETCH_PAIR, fetchPairSuccess, fetchPairFailure, postAnnotationSuccess, postAnnotationFailure, POST_ANNOTATION, POST_ANNOTATION_SUCCESS, SHOW_SCORE, hideAddedScore, showAddedScore, RESTART_GAME } from './reducer'
 import { of } from 'rxjs'
 
 const SCORE_UPDATE_SCREEN_TIME = 1500

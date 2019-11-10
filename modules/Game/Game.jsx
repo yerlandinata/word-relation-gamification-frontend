@@ -6,6 +6,7 @@ import { WORD_RELATION_TYPES } from './constants'
 import GoldStandard from 'modules/GoldStandard/GoldStandard'
 import { postAnnotation, restartGame, fetchPair } from './reducer'
 import Tutorial from './components/Tutorial'
+import { showSetPhoneNumberPage } from 'modules/MainPage/reducer'
 
 class GameComponent extends React.Component {
     constructor(props) {
@@ -31,17 +32,19 @@ class GameComponent extends React.Component {
     }
 
     render() {
-        return this.state.showTutorial ? <Tutorial onExit={this._onExitTutorial} /> : (
+        return this.state.showTutorial ? <Tutorial onExit={this._onExitTutorial} /> : !this.props.isError ? (
             <div className="d-flex flex-column">
                 <div className="container mb-3">
                     <UserInfo />
                 </div>
-                <Center>Clue:</Center>
-                <Center>
-                    <GoldStandard />
+                <Center className="m-3">
+                    {!this.state.displayHelp && <div>Pilih yang tepat:</div>}
+                </Center>
+                <Center className="container-fluid d-flex flex-column">
+                    {this.state.displayHelp ? <GoldStandard /> : this._renderChoices()}
                 </Center>
                 <Center>
-                    {this.state.displayHelp ? (
+                    {!this.props.isShowingAddedScore && this.props.targetPair && (this.state.displayHelp ? (
                         <button
                             className={`btn btn-sm btn-primary m-2`}
                             onClick={this._onHideHelp}
@@ -55,16 +58,10 @@ class GameComponent extends React.Component {
                             >
                                 Bantuan permainan
                             </button>
-                        )}
-                </Center>
-                <Center className="m-3">
-                    {!this.state.displayHelp && <div>Pilih yang tepat:</div>}
-                </Center>
-                <Center className="container-fluid d-flex flex-column">
-                    {this.state.displayHelp ? this._renderHelp() : this._renderChoices()}
+                        ))}
                 </Center>
             </div>
-        )
+        ) : <Center>Permainan berakhir!</Center>
     }
 
     _onExitTutorial() {
@@ -85,40 +82,6 @@ class GameComponent extends React.Component {
         })
     }
 
-    _renderHelp() {
-        return (
-            <div>
-                <div className="m-3">
-                    <Center>
-                        kucing <span className="h5 ml-1 mr-1">&#x21d2;</span> binatang
-                    </Center>
-                    <Center>
-                        kucing adalah sejenis binatang
-                    </Center>
-                </div>
-                <div className="m-3">
-                    <Center>
-                        hewan <span className="h5 ml-1 mr-1">&#x21d4;</span> binatang
-                    </Center>
-                    <Center>
-                        hewan sama artinya dengan binatang
-                    </Center>
-                </div>
-                <div className="m-3">
-                    <Center className="m-2">
-                        kabel <span className="h5 ml-1 mr-1">&#x21cf;</span> bintang
-                    </Center>
-                    <Center>
-                        kabel bukan sejenis bintang dan
-                    </Center>
-                    <Center className="text-center">
-                        kabel tidak sama artinya dengan bintang
-                    </Center>
-                </div>
-            </div>
-        )
-    }
-
     _renderChoices() {
         if (this.props.isLoading) {
             return <Center>loading..</Center>
@@ -129,13 +92,19 @@ class GameComponent extends React.Component {
         } else if (!this.props.targetPair) {
             return (
                 <div>
-                    <Center className="m-3">Permainan selesai :)</Center>
+                    <Center className="m-3">Level {this.props.userInfo.level} selesai :)</Center>
                     <Center>Skor: {this.props.userInfo.score}</Center>
                     <Center>Ranking: {this.props.userInfo.rank}</Center>
-                    <Center className="m-3 text-center">Login gunakan no. HP dan tgl lahir untuk cek ranking lain kali!</Center>
-                    <Center className="m-3">
-                        <button className="btn btn-primary" onClick={this.props.restartGame}>
-                            Reset Score dan Main Lagi!
+                    {this.props.userInfo.phoneNumber < 1000006 && 
+                    <Center>
+                        <button className="btn btn-primary m-2" onClick={this.props.setPhoneNumber}>
+                            Atur nomor HP untuk mendapat hadiah
+                        </button>                    
+                    </Center>
+                    }
+                    <Center className="m-3 d-flex flex-column">
+                        <button className={`btn btn${this.props.userInfo.phoneNumber < 1000006 ? '-outline' : ''}-primary`} onClick={this.props.restartGame}>
+                            Lanjut ke level berikutnya
                         </button>
                     </Center>
                 </div>
@@ -147,11 +116,11 @@ class GameComponent extends React.Component {
                     (wrt, i) =>
                         <button
                             key={i}
-                            className="btn btn-outline-primary m-2"
+                            className="btn btn-outline-primary m-2 p-1"
                             onClick={this._onSubmitAnnotation(wrt.id)}
                         > {(
                             wrt.id != WORD_RELATION_TYPES.SKIP.id ?
-                                (<>{this.props.targetPair.lhsWord} <span className="h5">{wrt.symbol}</span> {this.props.targetPair.rhsWord} </>) :
+                                (<>{this.props.targetPair.lhsWord} <span className="h4 mr-1 ml-1">{wrt.symbol}</span> {this.props.targetPair.rhsWord} </>) :
                                 (<>skip</>)
                         )}
                         </button>
@@ -176,7 +145,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     submitAnnotation: (wordPairId, wordRelationTypeId, time) => dispatch(postAnnotation(wordPairId, wordRelationTypeId, time)),
     restartGame: () => dispatch(restartGame()),
-    fetchFirstPair: () => dispatch(fetchPair())
+    fetchFirstPair: () => dispatch(fetchPair()),
+    setPhoneNumber: () => dispatch(showSetPhoneNumberPage()),
 })
 
 const Game = connect(mapStateToProps, mapDispatchToProps)(GameComponent)

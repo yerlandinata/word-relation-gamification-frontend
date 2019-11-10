@@ -7,6 +7,7 @@ export const POST_ANNOTATION_SUCCESS = 'Annotation/POST_SUCCESS'
 export const POST_ANNOTATION_FAILURE = 'Annotation/POST_FAILURE'
 
 export const RESTART_GAME = 'Game/RESTART'
+export const RESTART_GAME_FAILURE = 'Game/RESTART_FAILURE'
 
 export const SHOW_SCORE = 'Score/SHOW'
 export const HIDE_SCORE = 'Score/HIDE'
@@ -17,6 +18,11 @@ export const fetchPair = () => ({
 
 export const restartGame = () => ({
     type: RESTART_GAME,
+})
+
+export const restartGameFailure = (error) => ({
+    type: RESTART_GAME_FAILURE,
+    payload: { error },
 })
 
 export const fetchPairSuccess = ({id, lhsWord, rhsWord, beginTime}) => ({
@@ -61,6 +67,7 @@ const INITIAL_STATE = {
     isShowingAddedScore: false,
     addedScore: 0,
     targetPair: null,
+    isError: false,
 }
 
 const gameReducer = (state = INITIAL_STATE, { type, payload }) => {
@@ -88,6 +95,12 @@ const gameReducer = (state = INITIAL_STATE, { type, payload }) => {
             return {
                 ...state,
                 isLoading: false,
+            }
+        case RESTART_GAME_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
             }
         case SHOW_SCORE:
             return {

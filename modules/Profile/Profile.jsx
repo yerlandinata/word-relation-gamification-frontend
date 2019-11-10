@@ -10,47 +10,30 @@ class ProfileComponent extends React.Component {
 
         this.state = {
             fullName: '',
-            educationLevel: '',
+            birthDate: '',
+            isBirthDateInvalid: true,
             isNameInvalid: true,
-            isEducationLevelInvalid: true,
         }
 
         this._onFullNameChange = this._onFullNameChange.bind(this)
-        this._onEducationLevelChange = this._onEducationLevelChange.bind(this)
         this._onSubmitProfile = this._onSubmitProfile.bind(this)
+        this._onBirthDateChange = this._onBirthDateChange.bind(this)
     }
 
     render() {
         return (
             <div className="container-fluid">
                 <Center className="m-3">
-                    {!this._isAnonymous() && <p className="text-center">Ayo kita berkenalan ;)</p>}
-                    {this._isAnonymous() && <p className="text-center text-danger">Pemain anonim tidak bisa mendapatkan hadiah :(</p>}
+                    <p className="text-center">Ayo kita berkenalan ;)</p>
                 </Center>
                 <form className="d-flex flex-column">
                     <div className="form-group">
-                        <label htmlFor="phoneNumber">{this._isAnonymous() ? 'Player ID' : 'Player ID (No. HP)'}</label>
-                        <input disabled type="tel" className="form-control" id="phoneNumber" value={this.props.phoneNumber} />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="birthDate">{this._isAnonymous() ? 'PIN' : 'PIN (Tanggal Lahir)'}</label>
-                        <input disabled className="form-control" id="birthDate" value={this.props.birthDate} />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="fullName">Nama Lengkap (atau <i>display name</i> saja)</label>
+                        <label htmlFor="fullName"><i>Display Name</i> (untuk scoreboard)</label>
                         <input className={`form-control ${this.state.isNameInvalid ? 'is-invalid' : ''}`} id="fullName" value={this.state.fullName} onChange={this._onFullNameChange}/>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="educationLevel">Pendidikan</label>
-                        <select className={`form-control ${this.state.isEducationLevelInvalid ? 'is-invalid' : ''}`} value={this.state.educationLevel} onChange={this._onEducationLevelChange}>
-                            <option value="">tingkat pendidikan kamu..</option>
-                            <option value="Sedang SMA">Sedang SMA</option>
-                            <option value="Lulus SMA">Lulus SMA</option>
-                            <option value="Sedang S1">Sedang S1</option>
-                            <option value="Lulus S1">Lulus S1</option>
-                            <option value="Sedang Pascasarjana">Sedang Pascasarjana</option>
-                            <option value="Lulus Pascasarjana">Lulus Pascasarjana</option>
-                        </select>
+                        <label htmlFor="birthDate">Tanggal lahir DDMMYYYY (contoh: 25121997)</label>
+                        <input className={`form-control ${this.state.isBirthDateInvalid ? 'is-invalid' : ''}`} placeholder="25121997" id="birthDate" value={this.state.birthDate} onChange={this._onBirthDateChange} />
                     </div>
                     <button
                         type="button"
@@ -61,20 +44,11 @@ class ProfileComponent extends React.Component {
                         Lanjut
                     </button>
                 </form>
-                <Center className="m-3"><p className="text-center">Data yang Kamu berikan akan dirahasiakan</p></Center>
+                <Center className="d-flex flex-column m-3">
+                    <p className="text-center">Oh, kita kan berkenalan! Salam kenal! Nama ku Yudhistira Erlandinata, perancang game ini.</p>
+                </Center>
             </div>
         )
-    }
-
-    _isAnonymous() {
-        return this.props.birthDate == 12345678
-    }
-
-    _onEducationLevelChange(event) {
-        this.setState({
-            educationLevel: event.target.value,
-            isEducationLevelInvalid: event.target.value == "",
-        })
     }
 
     _onFullNameChange(event) {
@@ -86,16 +60,31 @@ class ProfileComponent extends React.Component {
         }
     }
 
+    _onBirthDateChange(event) {
+        if (!isNaN(event.target.value) && !event.target.value.includes(' ') && event.target.value.length <= 8) {
+            this.setState({
+                birthDate: event.target.value,
+                isBirthDateInvalid: event.target.value.length < 8,
+            })
+        }
+    }
+
     _onSubmitProfile(event) {
         event.preventDefault()
-        if (!this.state.isEducationLevelInvalid && !this.state.isNameInvalid) {
-            this.props.submitProfile(this.props.phoneNumber, this.props.birthDate, this.state.fullName, this.state.educationLevel)
+        if (!this.state.isNameInvalid && !this.state.isBirthDateInvalid) {
+            this.props.submitProfile(
+                (new Date()).getTime() % 1000003,
+                parseInt(this.state.birthDate, 10),
+                this.state.fullName,
+                this.props.source,
+            )
         }
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownProps) => ({
     ...state.profileState,
+    source: ownProps.source,
 })
 
 const mapDispatchToProps = (dispatch) => ({

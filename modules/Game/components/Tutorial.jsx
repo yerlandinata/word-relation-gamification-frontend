@@ -12,8 +12,7 @@ const TUTORIAL_STAGE = {
     CHOICES: 1,
     ARROWS: 2,
     CHOOSE: 3,
-    CLUE: 4,
-    PRIZE: 5,
+    PRIZE: 4,
 }
 
 class Tutorial extends React.Component {
@@ -71,12 +70,12 @@ class Tutorial extends React.Component {
                 <Center>
                     {this._renderNavButtons()}
                 </Center>
-                <Center className="text-center mt-3 mb-2">
-                    Permainan terdiri atas beberapa ronde.<br />
-                    Setiap rondenya, kamu akan diberi sebuah pasangan kata.<br />
-                    Kamu harus menebak hubungan kata yang diberikan.<br />
-                    Sebagai contoh, kali ini pasangan kata yang diberikan adalah anjing dan binatang.<br />
-                    Pilihan hubungan kata yang diberikan selalu sama, yaitu seperti berikut:
+                <Center className="text-center mt-3 mb-2 d-flex flex-column">
+                    <span>Permainan terdiri atas beberapa ronde.</span>
+                    <span>Setiap rondenya, kamu akan diberi sebuah pasangan kata.</span>
+                    <span>Kamu harus menebak <strong>hubungan kata</strong> yang diberikan.</span>
+                    <span>Sebagai contoh, kali ini pasangan kata yang diberikan adalah anjing dan binatang.</span>
+                    <span>Pilihan hubungan kata yang diberikan selalu sama, yaitu seperti berikut:</span>
                 </Center>
                 <Center className="d-flex flex-column">
                     {
@@ -87,7 +86,7 @@ class Tutorial extends React.Component {
                                     className="btn btn-outline-primary m-2"
                                 > {(
                                     wrt.id != WORD_RELATION_TYPES.SKIP.id ?
-                                        (<>anjing <span className="h5">{wrt.symbol}</span> binatang </>) :
+                                        (<>anjing <span className="h4">{wrt.symbol}</span> binatang </>) :
                                         (<>skip</>)
                                 )}
                                 </button>
@@ -106,25 +105,25 @@ class Tutorial extends React.Component {
                     Berikut adalah penjelasan untuk masing-masing pilihan:
                 </Center>
                 <div>
-                    <div className="m-3">
+                    <div className="mt-4 mb-4">
                         <Center>
-                            kucing <span className="h5 ml-1 mr-1">&#x21d2;</span> binatang
+                            kucing <span className="h4 ml-1 mr-1">&#x21d2;</span> binatang
                         </Center>
                         <Center className="text-center">
                             kucing adalah sejenis binatang
                         </Center>
                     </div>
-                    <div className="m-3">
+                    <div className="mt-4 mb-4">
                         <Center>
-                            hewan <span className="h5 ml-1 mr-1">&#x21d4;</span> binatang
+                            hewan <span className="h4 ml-1 mr-1">&#x21d4;</span> binatang
                         </Center>
                         <Center className="text-center">
                             hewan sama artinya dengan binatang (sinonim)
                         </Center>
                     </div>
-                    <div className="m-3">
-                        <Center className="m-2">
-                            kabel <span className="h5 ml-1 mr-1">&#x21cf;</span> bintang
+                    <div className="mt-4 mb-4">
+                        <Center className="m-1">
+                            kabel <span className="h4 ml-1 mr-1">&#x21cf;</span> bintang
                         </Center>
                         <Center className="text-center">
                             kabel bukan sejenis bintang dan
@@ -160,30 +159,12 @@ class Tutorial extends React.Component {
                                     className={`btn btn${wrt != WORD_RELATION_TYPES.HYPONYMY ? '-outline' : ''}-primary m-2`}
                                 > {(
                                     wrt.id != WORD_RELATION_TYPES.SKIP.id ?
-                                        (<>anjing <span className="h5">{wrt.symbol}</span> binatang </>) :
+                                        (<>anjing <span className="h4">{wrt.symbol}</span> binatang </>) :
                                         (<>skip</>)
                                 )}
                                 </button>
                         )
                     }
-                </Center>
-            </div>
-        )
-    }
-
-    _renderClues() {
-        return (
-            <div className="d-flex flex-column">
-                <Center>
-                    {this._renderNavButtons()}
-                </Center>
-                <Center className="text-center mt-3 mb-2">
-                    Pada setiap ronde, kamu juga akan diberikan beberapa clue.<br />
-                    Clue yang diberikan berupa contoh pasangan kata dan hubungannya yang benar.<br />
-                    Clue akan ditampilkan seperti berikut:
-                </Center>
-                <Center>
-                    <GoldStandard />
                 </Center>
             </div>
         )
@@ -198,14 +179,14 @@ class Tutorial extends React.Component {
                 <Center className="mt-3 mb-2 d-flex flex-column">
                     <p className="text-center">
                         Skor, ranking, dan sisa waktu ditampilkan di bagian atas layar Kamu. <br/>
-                        Jika Kamu berhasil mencapai ranking final 10 besar, maka Kamu berhak mendapatkan hadiah berupa voucher GOPAY/OVO senilai Rp20.000. <br/>
+                        Jika Kamu berhasil mencapai ranking final 10 besar, maka Kamu berhak mendapatkan hadiah berupa voucher GOPAY/OVO senilai Rp25.000. <br/>
                         Tetapi, ranking final dihitung di akhir bulan November 2019 <br/>
                         Jadi, ranking yang ditampilkan sekarang hanyalah ranking sementara. <br/>
                         Kamu bisa kembali lagi dan login lain kali untuk mengecek ranking kamu. <br/>
                         Jika ranking Kamu turun, Kamu bisa coba bermain lagi!
                     </p>
                     <p className="text-center">
-                        <i>Jika kamu tadi tidak memberikan nomor telepon, bagaimana kami bisa menghubungi kamu untuk memberikan hadiah, duh!</i>
+                        <i>Di akhir permainan, Kamu akan dimintai nomor HP. Jika kamu tidak memberikannya, hadiahnya tidak bisa dikirim</i>
                     </p>
                 </Center>
                 <Center>
