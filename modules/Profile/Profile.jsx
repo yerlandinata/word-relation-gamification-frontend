@@ -33,7 +33,7 @@ class ProfileComponent extends React.Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="birthDate">Tanggal lahir DDMMYYYY (contoh: 25121997)</label>
-                        <input className={`form-control ${this.state.isBirthDateInvalid ? 'is-invalid' : ''}`} placeholder="25121997" id="birthDate" value={this.state.birthDate} onChange={this._onBirthDateChange} />
+                        <input type="tel" className={`form-control ${this.state.isBirthDateInvalid ? 'is-invalid' : ''}`} placeholder="25121997" id="birthDate" value={this.state.birthDate} onChange={this._onBirthDateChange} />
                     </div>
                     <button
                         type="button"
