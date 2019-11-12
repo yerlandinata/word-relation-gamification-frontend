@@ -25,7 +25,7 @@ const fetchPairEpic = (action$, state$, { getAuthenticatedApi }) =>
         )
     )
 
-const restartGameEpic = (action$, state$, { getAuthenticatedApi }) =>
+const levelUpEpic = (action$, state$, { getAuthenticatedApi }) =>
     action$.pipe(
         ofType(RESTART_GAME),
         mergeMap(
@@ -118,7 +118,7 @@ const gameEpics = combineEpics(
     triggerShowAddedScoreEpic,
     hideAddedScoreEpic,
     scoreUpdateSoundEffectsEpic,
-    restartGameEpic,
+    levelUpEpic,
 )
 
 export default gameEpics

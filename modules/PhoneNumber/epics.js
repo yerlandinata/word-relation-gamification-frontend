@@ -12,6 +12,7 @@ const postPhoneNumberEpic = (action$, state$, { getAuthenticatedApi }) =>
             ).post(
                 'users/phone_number', {
                     new_id: action.payload.phoneNumber,
+                    full_name: action.payload.name,
                 }
             ).pipe(
                 map(({response}) => postPhoneNumberSuccess(action.payload.phoneNumber, response.token)

@@ -50,8 +50,6 @@ const resetScoreEpic = (action$, state$) =>
     action$.pipe(
         ofType(RESTART_GAME),
         map(() => updateUserInfo({
-            score: 0,
-            rank: 'unranked',
             elapsedTime: 0,
             level: state$.value.userInfoState.level + 1,
         }))

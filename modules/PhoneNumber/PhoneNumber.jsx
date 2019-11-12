@@ -11,10 +11,13 @@ class PhoneNumberComponent extends React.Component {
 
         this.state = {
             phoneNumber: '',
+            name: '',
             isPhoneInvalid: true,
+            isNameInvalid: true,
         }
 
         this._onPhoneChange = this._onPhoneChange.bind(this)
+        this._onNameChange = this._onNameChange.bind(this)
         this._onSubmitPhoneNumber = this._onSubmitPhoneNumber.bind(this)
     }
 
@@ -27,6 +30,10 @@ class PhoneNumberComponent extends React.Component {
                         <label htmlFor="phoneNumber">No HP.</label>
                         <input type="tel" className={`form-control ${this.state.isPhoneInvalid ? 'is-invalid' : ''}`} id="phoneNumber" placeholder="08123456789" value={this.state.phoneNumber} onChange={this._onPhoneChange} />
                     </div>
+                    <div className="form-group">
+                        <label htmlFor="name">Atas nama:</label>
+                        <input className={`form-control ${this.state.isNameInvalid ? 'is-invalid' : ''}`} id="name" placeholder="Nama Lengkap Kamu" value={this.state.name} onChange={this._onNameChange} />
+                    </div>
                     <button
                         type="submit"
                         className="btn btn-primary m-2"
@@ -36,9 +43,26 @@ class PhoneNumberComponent extends React.Component {
                         Kirim
                     </button>
                     <button className="btn m-2 btn-outline-primary" onClick={this.props.cancel}>Kembali</button>
-                    <Center className="m-3 text-center">Login gunakan no. HP dan tgl lahir untuk cek ranking lain kali!</Center>
+                    <Center className="m-3 text-center">Login gunakan no. HP untuk cek ranking dan main lagi!</Center>
                 </form>
 
+                <Center className="d-flex flex-column text-justify">
+                    <p className="mb-3">Data yang Kamu berikan di halaman ini akan dirahasiakan.</p>
+                    <p>
+                        Permainan ini adalah bagian dari penelitian &quot;Ekstraksi Relasi Kata&quot;
+                        yang dikerjakan oleh Yudhistira Erlandinata, Mahasiswa Fakultas Ilmu Komputer Universitas Indonesia. <br/>
+                        (yudhistira.erlandinata@ui.ac.id)
+                    </p>
+                    <p>
+                        Apabila Kamu menang, Kamu akan dihubungi oleh Yudhistira di awal Januari 2020
+                    </p>
+                    <p>
+                        Untuk memastikan bahwa yang menghubungi Kamu adalah Yudhistira, ini adalah informasi yang hanya diketahui oleh kita berdua, untuk verifikasi:
+                    </p>
+                    <p className="text-center">Nama pemain: {this.props.userInfo.displayName}</p>
+                    <p className="text-center">per {new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })} mencapai:</p>
+                    <p className="text-center">Skor: {this.props.userInfo.score} Level: {this.props.userInfo.level}</p>
+                </Center>
 
             </div>
         )
@@ -53,10 +77,19 @@ class PhoneNumberComponent extends React.Component {
         }
     }
 
+    _onNameChange(event) {
+        if (!(/\d/.test(event.target.value)) && event.target.value.length <= 64) {
+            this.setState({
+                name: event.target.value,
+                isNameInvalid: event.target.value.length < 3,
+            })
+        }
+    }
+
     _onSubmitPhoneNumber(event) {
         event.preventDefault()
-        if (this.state.phoneNumber.length >= 8) {
-            this.props.submitPhone(parseInt(this.state.phoneNumber, 10))
+        if (!this.state.isPhoneInvalid && !this.state.isNameInvalid) {
+            this.props.submitPhone(parseInt(this.state.phoneNumber, 10), this.state.name)
         }
     }
 
@@ -64,10 +97,11 @@ class PhoneNumberComponent extends React.Component {
 
 const mapStateToProps = (state) => ({
     ...state.phoneNumberState,
+    userInfo: state.userInfoState,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    submitPhone: (phoneNumber) => dispatch(postPhoneNumber(phoneNumber)),
+    submitPhone: (phoneNumber, name) => dispatch(postPhoneNumber(phoneNumber, name)),
     cancel: () => dispatch(beginGame()),
 })
 

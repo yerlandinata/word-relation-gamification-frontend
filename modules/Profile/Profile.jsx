@@ -25,7 +25,7 @@ class ProfileComponent extends React.Component {
                 </Center>
                 <form className="d-flex flex-column">
                     <div className="form-group">
-                        <label htmlFor="displayName"><i>Display Name</i> (untuk scoreboard)</label>
+                        <label htmlFor="displayName"><i>Display Name</i> (untuk public scoreboard)</label>
                         <input className={`form-control ${this.state.isNameInvalid ? 'is-invalid' : ''}`} id="displayName" value={this.state.displayName} onChange={this._ondisplayNameChange}/>
                     </div>
                     <button

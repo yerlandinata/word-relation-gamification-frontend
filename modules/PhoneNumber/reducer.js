@@ -2,9 +2,9 @@ export const POST_PHONE_NUMBER = 'PhoneNumber/POST'
 export const POST_PHONE_NUMBER_SUCCESS = 'PhoneNumber/POST_SUCCESS'
 export const POST_PHONE_NUMBER_FAILURE = 'PhoneNumber/POST_FAILURE'
 
-export const postPhoneNumber = (phoneNumber) => ({
+export const postPhoneNumber = (phoneNumber, name) => ({
     type: POST_PHONE_NUMBER,
-    payload: { phoneNumber }
+    payload: { phoneNumber, name }
 })
 
 export const postPhoneNumberSuccess = (phoneNumber, token) => ({
