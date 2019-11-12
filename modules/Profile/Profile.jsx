@@ -9,13 +9,13 @@ class ProfileComponent extends React.Component {
         super(props)
 
         this.state = {
-            fullName: '',
+            displayName: '',
             birthDate: '',
             isBirthDateInvalid: true,
             isNameInvalid: true,
         }
 
-        this._onFullNameChange = this._onFullNameChange.bind(this)
+        this._ondisplayNameChange = this._ondisplayNameChange.bind(this)
         this._onSubmitProfile = this._onSubmitProfile.bind(this)
         this._onBirthDateChange = this._onBirthDateChange.bind(this)
     }
@@ -28,8 +28,8 @@ class ProfileComponent extends React.Component {
                 </Center>
                 <form className="d-flex flex-column">
                     <div className="form-group">
-                        <label htmlFor="fullName"><i>Display Name</i> (untuk scoreboard)</label>
-                        <input className={`form-control ${this.state.isNameInvalid ? 'is-invalid' : ''}`} id="fullName" value={this.state.fullName} onChange={this._onFullNameChange}/>
+                        <label htmlFor="displayName"><i>Display Name</i> (untuk scoreboard)</label>
+                        <input className={`form-control ${this.state.isNameInvalid ? 'is-invalid' : ''}`} id="displayName" value={this.state.displayName} onChange={this._ondisplayNameChange}/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="birthDate">Tanggal lahir DDMMYYYY (contoh: 25121997)</label>
@@ -51,10 +51,10 @@ class ProfileComponent extends React.Component {
         )
     }
 
-    _onFullNameChange(event) {
+    _ondisplayNameChange(event) {
         if (event.target.value.length <= 64) {
             this.setState({
-                fullName: event.target.value,
+                displayName: event.target.value,
                 isNameInvalid: event.target.value.length < 3,
             })
         }
@@ -75,7 +75,7 @@ class ProfileComponent extends React.Component {
             this.props.submitProfile(
                 (new Date()).getTime() % 1000003,
                 parseInt(this.state.birthDate, 10),
-                this.state.fullName,
+                this.state.displayName,
                 this.props.source,
             )
         }
@@ -88,7 +88,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    submitProfile: (phoneNumber, birthDate, fullName, educationLevel) => dispatch(postProfile(phoneNumber, birthDate, fullName, educationLevel))
+    submitProfile: (phoneNumber, birthDate, displayName, educationLevel) => dispatch(postProfile(phoneNumber, birthDate, displayName, educationLevel))
 })
 
 const Profile = connect(mapStateToProps, mapDispatchToProps)(ProfileComponent)

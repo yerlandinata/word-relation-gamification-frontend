@@ -14,7 +14,7 @@ const fetchRankingsEpic = (action$, state$, { getAuthenticatedApi }) =>
                     map(({response}) => fetchRankingsSuccess(
                         response.map(
                             player => ({
-                                fullName: player.full_name,
+                                displayName: player.display_name,
                                 rank: player.rank,
                                 score: player.score,
                                 level: player.level,

@@ -11,7 +11,7 @@ const postProfileEpic = (action$, state$, {publicApi}) =>
                 'users/register', {
                     id: action.payload.phoneNumber,
                     birth_date: action.payload.birthDate,
-                    full_name: action.payload.fullName,
+                    display_name: action.payload.displayName,
                     education_level: action.payload.educationLevel,
                 }
             ).pipe(

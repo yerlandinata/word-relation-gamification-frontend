@@ -21,7 +21,7 @@ const loginEpic = (action$, state$, {publicApi}) =>
                             case LOGIN_OK: 
                                 return postLoginSuccess({
                                     phoneNumber: response.user.id,
-                                    fullName: response.user.full_name,
+                                    displayName: response.user.display_name,
                                     birthDate: response.user.birth_date,
                                     score: response.user.score,
                                     rank: response.user.rank,

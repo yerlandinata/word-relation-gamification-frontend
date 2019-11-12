@@ -25,7 +25,7 @@ class RankingsComponent extends React.Component {
                     (player, i) => (
                         <div className="row" key={i}>
                             <span className="col-2">{player.rank}</span>
-                            <span className="col-6 text-center">{player.fullName}</span>
+                            <span className="col-6 text-center">{player.displayName}</span>
                             <span className="col-2 text-right">{player.score}</span>
                             <span className="col-2 text-right">{player.level}</span>
                         </div>
