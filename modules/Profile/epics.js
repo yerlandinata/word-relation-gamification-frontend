@@ -10,9 +10,8 @@ const postProfileEpic = (action$, state$, {publicApi}) =>
             publicApi.post(
                 'users/register', {
                     id: action.payload.phoneNumber,
-                    birth_date: action.payload.birthDate,
                     display_name: action.payload.displayName,
-                    education_level: action.payload.educationLevel,
+                    campaign_source: action.payload.campaignSource,
                 }
             ).pipe(
                 map(({response}) => postProfileSuccess({

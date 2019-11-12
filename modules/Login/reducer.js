@@ -2,9 +2,9 @@ export const POST_LOGIN = 'Login/POST'
 export const POST_LOGIN_SUCCESS = 'Login/POST_SUCCESS'
 export const POST_LOGIN_FAILURE = 'Login/POST_FAILURE'
 
-export const postLogin = (phoneNumber, birthDate) => ({
+export const postLogin = (phoneNumber) => ({
     type: POST_LOGIN,
-    payload: { phoneNumber, birthDate }
+    payload: { phoneNumber }
 })
 
 export const postLoginSuccess = (user, token) => ({

@@ -2,9 +2,9 @@ export const POST_PROFILE = 'Profile/POST'
 export const POST_PROFILE_SUCCESS = 'Profile/POST_SUCCESS'
 export const POST_PROFILE_FAILURE = 'Profile/POST_FAILURE'
 
-export const postProfile = (phoneNumber, birthDate, displayName, educationLevel) => ({
+export const postProfile = (phoneNumber, displayName, campaignSource) => ({
     type: POST_PROFILE,
-    payload: { phoneNumber, birthDate, displayName, educationLevel }
+    payload: { phoneNumber, displayName, campaignSource }
 })
 
 export const postProfileSuccess = (user, token) => ({

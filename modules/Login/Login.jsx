@@ -10,12 +10,9 @@ class LoginComponent extends React.Component {
 
         this.state = {
             phoneNumber: '',
-            birthDate: '',
             isPhoneInvalid: true,
-            isBirthDateInvalid: true,
         }
 
-        this._onBirthDateChange = this._onBirthDateChange.bind(this)
         this._onPhoneChange = this._onPhoneChange.bind(this)
         this._onSubmitLogin = this._onSubmitLogin.bind(this)
     }
@@ -29,20 +26,16 @@ class LoginComponent extends React.Component {
                         <label htmlFor="phoneNumber">No. HP</label>
                         <input type="tel" className={`form-control ${this.state.isPhoneInvalid ? 'is-invalid' : ''}`} id="phoneNumber" placeholder="08123456789" value={this.state.phoneNumber} onChange={this._onPhoneChange} />
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="birthDate">Tanggal Lahir DDMMYYYY (contoh: 25121997)</label>
-                        <input type="tel" className={`form-control ${this.state.isBirthDateInvalid ? 'is-invalid' : ''}`} id="birthDate" placeholder="25121997" value={this.state.birthDate} onChange={this._onBirthDateChange} />
-                    </div>
                     <button
                         type="submit"
                         className="btn btn-primary m-2"
                         onClick={this._onSubmitLogin}
-                        disabled={this.props.isLoading || this.state.isBirthDateInvalid || this.state.isPhoneInvalid}
+                        disabled={this.props.isLoading || this.state.isPhoneInvalid}
                     >
                         Lanjut
                     </button>
                 </form>
-                {this.props.isError && <Center className="text-danger">No. HP atau tanggal lahir salah</Center>}
+                {this.props.isError && <Center className="text-danger">No. HP tidak terdaftar</Center>}
                 <Center className="mt-2 d-flex flex-column">
                     {!this.props.isLogin ? (<p className="text-center">Permainan ini berhadiah!</p>) : (<p className="text-center">Selamat datang kembali!</p>)}
                 </Center>
@@ -59,19 +52,10 @@ class LoginComponent extends React.Component {
         }
     }
 
-    _onBirthDateChange(event) {
-        if (!isNaN(event.target.value) && !event.target.value.includes(' ') && event.target.value.length <= 8) {
-            this.setState({
-                birthDate: event.target.value,
-                isBirthDateInvalid: event.target.value.length < 8,
-            })
-        }
-    }
-
     _onSubmitLogin(event) {
         event.preventDefault()
-        if (this.state.phoneNumber.length >= 8 && this.state.birthDate.length >= 8) {
-            this.props.submitLogin(parseInt(this.state.phoneNumber, 10), parseInt(this.state.birthDate, 10))
+        if (this.state.phoneNumber.length >= 8) {
+            this.props.submitLogin(parseInt(this.state.phoneNumber, 10))
         }
     }
 
@@ -83,7 +67,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    submitLogin: (phoneNumber, birthDate) => dispatch(postLogin(phoneNumber, birthDate))
+    submitLogin: (phoneNumber) => dispatch(postLogin(phoneNumber))
 })
 
 const Login = connect(mapStateToProps, mapDispatchToProps)(LoginComponent)

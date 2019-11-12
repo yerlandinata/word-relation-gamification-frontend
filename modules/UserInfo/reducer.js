@@ -2,16 +2,15 @@ import { SHOW_SCORE } from "modules/Game/reducer";
 
 export const UPDATE_USER_INFO = 'UserInfo/UPDATE'
 
-export const updateUserInfo = ({token, phoneNumber, birthDate, displayName, score, rank, elapsedTime, level}) => ({
+export const updateUserInfo = ({token, phoneNumber, displayName, score, rank, elapsedTime, level}) => ({
     type: UPDATE_USER_INFO,
-    payload: {token, phoneNumber, birthDate, displayName, score, rank, elapsedTime, level}
+    payload: {token, phoneNumber, displayName, score, rank, elapsedTime, level}
 })
 
 const INITIAL_STATE = {
     isLoading: false,
     token: '',
     phoneNumber: '',
-    birthDate: '',
     displayName: '',
     score: 0,
     level: 1,

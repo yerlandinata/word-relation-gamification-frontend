@@ -4,7 +4,7 @@ import { mergeMap, map, catchError } from 'rxjs/operators'
 import { of } from 'rxjs'
 
 const LOGIN_OK = 1
-const WRONG_ID_BIRTH_DATE = 3
+const LOGIN_INVALID = 3
 
 const loginEpic = (action$, state$, {publicApi}) =>
     action$.pipe(
@@ -13,7 +13,6 @@ const loginEpic = (action$, state$, {publicApi}) =>
             publicApi.post(
                 'users/login', {
                     id: action.payload.phoneNumber,
-                    birth_date: action.payload.birthDate
                 }
             ).pipe(
                 map(({response}) =>{
@@ -22,13 +21,12 @@ const loginEpic = (action$, state$, {publicApi}) =>
                                 return postLoginSuccess({
                                     phoneNumber: response.user.id,
                                     displayName: response.user.display_name,
-                                    birthDate: response.user.birth_date,
                                     score: response.user.score,
                                     rank: response.user.rank,
                                     elapsedTime: response.user.elapsed,
                                     level: response.user.level,
                                 }, response.token)
-                            case WRONG_ID_BIRTH_DATE:
+                            case LOGIN_INVALID:
                                 return postLoginFailure()
                         }
                     }

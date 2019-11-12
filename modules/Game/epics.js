@@ -99,7 +99,7 @@ const scoreUpdateSoundEffectsEpic = (action$, state$) =>
                 case 2 * level:
                     sfxUrl = 'https://freesound.org/data/previews/397/397355_4284968-lq.mp3'
                     break;
-                case -1 * level:
+                case -2 * level:
                     sfxUrl = 'https://freesound.org/data/previews/331/331912_3248244-lq.mp3'
                     break;
                 default:
