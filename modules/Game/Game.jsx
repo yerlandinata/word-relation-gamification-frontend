@@ -16,6 +16,7 @@ class GameComponent extends React.Component {
         this.state = {
             displayHelp: false,
             showTutorial: false,
+            beginOnboardingTime: null,
         }
 
         this._onSubmitAnnotation = this._onSubmitAnnotation.bind(this)
@@ -26,7 +27,10 @@ class GameComponent extends React.Component {
 
     componentDidMount() {
         if (this.props.userInfo.score == 0) {
-            this.setState({showTutorial: true})
+            this.setState({
+                showTutorial: true,
+                beginOnboardingTime: (new Date()).getTime(),
+            })
         } else {
             this.props.fetchFirstPair()
         }
@@ -67,7 +71,7 @@ class GameComponent extends React.Component {
 
     _onExitTutorial() {
         this.setState({showTutorial: false})
-        this.props.fetchFirstPair()
+        this.props.fetchFirstPair((new Date()).getTime() - this.state.beginOnboardingTime)
     }
 
     _onShowHelp() {
@@ -149,7 +153,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     submitAnnotation: (wordPairId, wordRelationTypeId, time) => dispatch(postAnnotation(wordPairId, wordRelationTypeId, time)),
     levelUpGame: () => dispatch(levelUpGame()),
-    fetchFirstPair: () => dispatch(fetchPair()),
+    fetchFirstPair: (onboardingTimeMs) => dispatch(fetchPair(onboardingTimeMs)),
     setPhoneNumber: () => dispatch(showSetPhoneNumberPage()),
 })
 

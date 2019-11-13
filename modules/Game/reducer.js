@@ -12,8 +12,9 @@ export const LEVEL_UP_GAME_FAILURE = 'Game/LEVEL_UP_FAILURE'
 export const SHOW_SCORE = 'Score/SHOW'
 export const HIDE_SCORE = 'Score/HIDE'
 
-export const fetchPair = () => ({
+export const fetchPair = (onboardingTimeMs) => ({
     type: FETCH_PAIR,
+    payload: { onboardingTimeMs }
 })
 
 export const levelUpGame = () => ({

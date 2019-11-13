@@ -1,5 +1,5 @@
 import { ofType, combineEpics } from 'redux-observable'
-import { mergeMap, map, catchError, debounceTime } from 'rxjs/operators'
+import { mergeMap, map, catchError, debounceTime, filter } from 'rxjs/operators'
 import { FETCH_PAIR, fetchPairSuccess, fetchPairFailure, postAnnotationSuccess, postAnnotationFailure, POST_ANNOTATION, POST_ANNOTATION_SUCCESS, SHOW_SCORE, hideAddedScore, showAddedScore, LEVEL_UP_GAME } from './reducer'
 import { of } from 'rxjs'
 
@@ -22,6 +22,24 @@ const fetchPairEpic = (action$, state$, { getAuthenticatedApi }) =>
                     catchError(error => of(fetchPairFailure(error.xhr.response)))
                 )
 
+        )
+    )
+
+const recordOnboardingTimeEpic = (action$, state$, { getAuthenticatedApi }) =>
+    action$.pipe(
+        ofType(FETCH_PAIR),
+        filter(action => action.payload.onboardingTimeMs),
+        mergeMap(
+            ({ payload }) => getAuthenticatedApi(
+                state$.value.userInfoState.token
+            ).post('users/onboarding_time', {
+                onboarding_time_ms: payload.onboardingTimeMs,
+            }).pipe(
+                map(({ response }) => ( {
+                    type: 'NOP'
+                })),
+                catchError(error => of({type: 'NOP'}))
+            )
         )
     )
 
@@ -120,6 +138,7 @@ const gameEpics = combineEpics(
     hideAddedScoreEpic,
     scoreUpdateSoundEffectsEpic,
     levelUpEpic,
+    recordOnboardingTimeEpic,
 )
 
 export default gameEpics
