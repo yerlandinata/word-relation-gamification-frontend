@@ -178,7 +178,7 @@ class Tutorial extends React.Component {
                 </div>
                 <Center className="mt-3 mb-2 d-flex flex-column">
                     <p className="text-center">
-                        Jika Kamu berhasil mencapai ranking final 10 besar, maka Kamu berhak mendapatkan hadiah berupa voucher GOPAY/OVO senilai Rp25.000. <br />
+                        Jika Kamu berhasil mencapai ranking final 10 besar, maka Kamu berhak mendapatkan hadiah berupa voucher GOPAY/OVO senilai Rp25.000 <i>tanpa diundi</i> <br />
                         Tetapi, ranking final dihitung di akhir bulan Desember 2019 <br />
                         Kamu bisa kembali lagi dan login lain kali untuk mengecek ranking kamu. <br />
                         Jika ranking Kamu turun, Kamu bisa coba bermain lagi!
