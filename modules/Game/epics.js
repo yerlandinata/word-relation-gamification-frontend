@@ -1,6 +1,6 @@
 import { ofType, combineEpics } from 'redux-observable'
 import { mergeMap, map, catchError, debounceTime } from 'rxjs/operators'
-import { FETCH_PAIR, fetchPairSuccess, fetchPairFailure, postAnnotationSuccess, postAnnotationFailure, POST_ANNOTATION, POST_ANNOTATION_SUCCESS, SHOW_SCORE, hideAddedScore, showAddedScore, RESTART_GAME } from './reducer'
+import { FETCH_PAIR, fetchPairSuccess, fetchPairFailure, postAnnotationSuccess, postAnnotationFailure, POST_ANNOTATION, POST_ANNOTATION_SUCCESS, SHOW_SCORE, hideAddedScore, showAddedScore, LEVEL_UP_GAME } from './reducer'
 import { of } from 'rxjs'
 
 const SCORE_UPDATE_SCREEN_TIME = 1500
@@ -27,7 +27,7 @@ const fetchPairEpic = (action$, state$, { getAuthenticatedApi }) =>
 
 const levelUpEpic = (action$, state$, { getAuthenticatedApi }) =>
     action$.pipe(
-        ofType(RESTART_GAME),
+        ofType(LEVEL_UP_GAME),
         mergeMap(
             action =>
                 getAuthenticatedApi(
@@ -60,6 +60,7 @@ const postAnnotationEpic = (action$, state$, { getAuthenticatedApi }) =>
                     score: response.player.score,
                     rank: response.player.rank,
                     elapsedTime: response.player.elapsed,
+                    level: response.player.level,
                 }, response.next_word_pair ? {
                     id: response.next_word_pair.id,
                     lhsWord: response.next_word_pair.word_1.replace(/_/g, ' '),

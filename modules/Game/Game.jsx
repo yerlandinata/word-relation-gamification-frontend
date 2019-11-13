@@ -4,7 +4,7 @@ import UserInfo from 'modules/UserInfo/UserInfo'
 import Center from 'modules/shared/Center'
 import { WORD_RELATION_TYPES } from './constants'
 import GoldStandard from 'modules/GoldStandard/GoldStandard'
-import { postAnnotation, restartGame, fetchPair } from './reducer'
+import { postAnnotation, levelUpGame, fetchPair } from './reducer'
 import Tutorial from './components/Tutorial'
 import { showSetPhoneNumberPage } from 'modules/MainPage/reducer'
 import Rankings from 'modules/Rankings/Rankings'
@@ -104,7 +104,7 @@ class GameComponent extends React.Component {
                     </Center>
                     }
                     <Center className="m-3 d-flex flex-column">
-                        <button className={`btn btn${this.props.userInfo.phoneNumber < 1000006 ? '-outline' : ''}-primary`} onClick={this.props.restartGame}>
+                        <button className={`btn btn${this.props.userInfo.phoneNumber < 1000006 ? '-outline' : ''}-primary`} onClick={this.props.levelUpGame}>
                             Lanjut ke level berikutnya
                         </button>
                     </Center>
@@ -148,7 +148,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     submitAnnotation: (wordPairId, wordRelationTypeId, time) => dispatch(postAnnotation(wordPairId, wordRelationTypeId, time)),
-    restartGame: () => dispatch(restartGame()),
+    levelUpGame: () => dispatch(levelUpGame()),
     fetchFirstPair: () => dispatch(fetchPair()),
     setPhoneNumber: () => dispatch(showSetPhoneNumberPage()),
 })

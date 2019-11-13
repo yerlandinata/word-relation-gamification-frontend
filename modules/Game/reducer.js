@@ -6,8 +6,8 @@ export const POST_ANNOTATION = 'Annotation/POST'
 export const POST_ANNOTATION_SUCCESS = 'Annotation/POST_SUCCESS'
 export const POST_ANNOTATION_FAILURE = 'Annotation/POST_FAILURE'
 
-export const RESTART_GAME = 'Game/RESTART'
-export const RESTART_GAME_FAILURE = 'Game/RESTART_FAILURE'
+export const LEVEL_UP_GAME = 'Game/LEVEL_UP'
+export const LEVEL_UP_GAME_FAILURE = 'Game/LEVEL_UP_FAILURE'
 
 export const SHOW_SCORE = 'Score/SHOW'
 export const HIDE_SCORE = 'Score/HIDE'
@@ -16,12 +16,12 @@ export const fetchPair = () => ({
     type: FETCH_PAIR,
 })
 
-export const restartGame = () => ({
-    type: RESTART_GAME,
+export const levelUpGame = () => ({
+    type: LEVEL_UP_GAME,
 })
 
-export const restartGameFailure = (error) => ({
-    type: RESTART_GAME_FAILURE,
+export const levelUpGameFailure = (error) => ({
+    type: LEVEL_UP_GAME_FAILURE,
     payload: { error },
 })
 
@@ -40,10 +40,10 @@ export const postAnnotation = (wordPairId, wordRelationTypeId, time) => ({
     payload: { wordPairId, wordRelationTypeId, time }
 })
 
-export const postAnnotationSuccess = ({score, rank, elapsedTime}, {id, lhsWord, rhsWord, beginTime}) => ({
+export const postAnnotationSuccess = ({score, rank, elapsedTime, level}, {id, lhsWord, rhsWord, beginTime}) => ({
     type: POST_ANNOTATION_SUCCESS,
     payload: {
-        player: {score, rank, elapsedTime},
+        player: {score, rank, elapsedTime, level},
         nextWordPair: id ? {id, lhsWord, rhsWord, beginTime} : null,
     }
 })
@@ -96,7 +96,7 @@ const gameReducer = (state = INITIAL_STATE, { type, payload }) => {
                 ...state,
                 isLoading: false,
             }
-        case RESTART_GAME_FAILURE:
+        case LEVEL_UP_GAME_FAILURE:
             return {
                 ...state,
                 isLoading: false,

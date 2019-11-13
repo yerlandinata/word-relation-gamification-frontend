@@ -3,7 +3,7 @@ import { POST_PROFILE_SUCCESS } from "modules/Profile/reducer";
 import { map, debounceTime } from "rxjs/operators";
 import { updateUserInfo } from "./reducer";
 import { POST_LOGIN_SUCCESS } from "modules/Login/reducer";
-import { POST_ANNOTATION_SUCCESS, RESTART_GAME } from "modules/Game/reducer";
+import { POST_ANNOTATION_SUCCESS, LEVEL_UP_GAME } from "modules/Game/reducer";
 import { POST_PHONE_NUMBER_SUCCESS } from "modules/PhoneNumber/reducer";
 
 const newProfileEpic = (action$) =>
@@ -48,7 +48,7 @@ const postAnnotationSuccessEpic = (action$) =>
 
 const resetScoreEpic = (action$, state$) =>
     action$.pipe(
-        ofType(RESTART_GAME),
+        ofType(LEVEL_UP_GAME),
         map(() => updateUserInfo({
             elapsedTime: 0,
             level: state$.value.userInfoState.level + 1,
