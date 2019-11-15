@@ -26,14 +26,15 @@ class GameComponent extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.userInfo.score == 0) {
-            this.setState({
-                showTutorial: true,
-                beginOnboardingTime: (new Date()).getTime(),
-            })
-        } else {
-            this.props.fetchFirstPair()
-        }
+        // if (this.props.userInfo.score == 0) {
+        //     this.setState({
+        //         showTutorial: true,
+        //         beginOnboardingTime: (new Date()).getTime(),
+        //     })
+        // } else {
+        //     this.props.fetchFirstPair()
+        // }
+        this.props.fetchFirstPair()
     }
 
     render() {
@@ -57,12 +58,7 @@ class GameComponent extends React.Component {
                             Lanjutkan permainan
                         </button>
                     ) : (
-                            <button
-                                className={`btn btn-sm btn-info m-2`}
-                                onClick={this._onShowHelp}
-                            >
-                                Bantuan permainan
-                            </button>
+                            <div/>
                         ))}
                 </Center>
             </div>
