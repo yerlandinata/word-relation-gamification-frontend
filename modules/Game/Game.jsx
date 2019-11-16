@@ -66,7 +66,7 @@ class GameComponent extends React.Component {
                         ))}
                 </Center>
             </div>
-        ) : <Center>Permainan berakhir!</Center>
+        ) : <Center className="mt-5">Permainan berakhir!</Center>
     }
 
     _onExitTutorial() {

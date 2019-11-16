@@ -1,6 +1,6 @@
 import { ofType, combineEpics } from 'redux-observable'
 import { mergeMap, map, catchError, debounceTime, filter } from 'rxjs/operators'
-import { FETCH_PAIR, fetchPairSuccess, fetchPairFailure, postAnnotationSuccess, postAnnotationFailure, POST_ANNOTATION, POST_ANNOTATION_SUCCESS, SHOW_SCORE, hideAddedScore, showAddedScore, LEVEL_UP_GAME } from './reducer'
+import { FETCH_PAIR, fetchPairSuccess, fetchPairFailure, postAnnotationSuccess, postAnnotationFailure, POST_ANNOTATION, POST_ANNOTATION_SUCCESS, SHOW_SCORE, hideAddedScore, showAddedScore, LEVEL_UP_GAME, levelUpGameFailure } from './reducer'
 import { of } from 'rxjs'
 
 const SCORE_UPDATE_SCREEN_TIME = 1500
@@ -57,7 +57,7 @@ const levelUpEpic = (action$, state$, { getAuthenticatedApi }) =>
                         rhsWord: response.word_2,
                         beginTime: (new Date()).getTime(),
                     })),
-                    catchError(error => of(fetchPairFailure(error.xhr.response)))
+                    catchError(error => of(levelUpGameFailure(error.xhr.response)))
                 )
 
         )
