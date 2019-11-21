@@ -1,7 +1,7 @@
 import { combineEpics, ofType } from "redux-observable";
-import { mapTo, debounceTime } from "rxjs/operators";
-import { beginGame } from "./reducer";
-import { POST_LOGIN_SUCCESS } from "modules/Login/reducer";
+import { mapTo, debounceTime, map } from "rxjs/operators";
+import { beginGame, REGISTER_PAGE } from "./reducer";
+import { POST_LOGIN_SUCCESS, postLogin } from "modules/Login/reducer";
 import { POST_PROFILE_SUCCESS } from "modules/Profile/reducer";
 import { POST_PHONE_NUMBER_SUCCESS } from "modules/PhoneNumber/reducer";
 
@@ -18,8 +18,22 @@ const beginGameEpic = combineEpics(
     createBeginGameEpic(POST_PHONE_NUMBER_SUCCESS),
 )
 
+const localstorageLoginEpic = (action$) =>
+    action$.pipe(
+        ofType(REGISTER_PAGE),
+        map(() => {
+            const savedPhoneLogin = localStorage.getItem('phone_login')
+            if (savedPhoneLogin) {
+                return postLogin(parseInt(savedPhoneLogin))
+            } else {
+                return {type: 'NOP'}
+            }
+        })
+    )
+
 const mainPageEpics = combineEpics(
     beginGameEpic,
+    localstorageLoginEpic,
 )
 
 export default mainPageEpics

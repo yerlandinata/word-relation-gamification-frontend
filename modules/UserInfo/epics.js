@@ -31,12 +31,13 @@ const loginProfileEpic = (action$) =>
 const changePhoneNumberSuccessEpic = (action$) =>
     action$.pipe(
         ofType(POST_PHONE_NUMBER_SUCCESS),
-        map(action =>
-            updateUserInfo({
+        map(action => {
+            localStorage.setItem('phone_login', action.payload.phoneNumber)
+            return updateUserInfo({
                 phoneNumber: action.payload.phoneNumber,
                 token: action.payload.token,
             })
-        )
+        })
     )
 
 const postAnnotationSuccessEpic = (action$) =>
