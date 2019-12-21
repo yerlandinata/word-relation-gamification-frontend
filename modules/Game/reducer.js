@@ -91,12 +91,12 @@ const gameReducer = (state = INITIAL_STATE, { type, payload }) => {
                 isLoading: false,
                 targetPair: payload.nextWordPair,
             }
+        case POST_ANNOTATION_FAILURE:
         case FETCH_PAIR_FAILURE:
             return {
                 ...state,
                 isLoading: false,
             }
-        case POST_ANNOTATION_FAILURE:
         case LEVEL_UP_GAME_FAILURE:
             return {
                 ...state,
