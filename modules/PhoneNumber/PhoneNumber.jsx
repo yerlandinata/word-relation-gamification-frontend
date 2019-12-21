@@ -49,7 +49,7 @@ class PhoneNumberComponent extends React.Component {
                 <Center className="d-flex flex-column text-justify">
                     <p className="mb-3">Data yang Kamu berikan di halaman ini akan dirahasiakan.</p>
                     <p>
-                        Permainan ini adalah bagian dari penelitian &quot;Ekstraksi Relasi Kata&quot;
+                        Permainan ini adalah bagian dari penelitian skripsi &quot;Pembangunan Korpus Relasi Semantik Hiponim-Hipernim Bahasa Indonesia dengan Pendekatan Pattern-Based, Crowdsourcing, dan Machine Learning&quot;
                         yang dikerjakan oleh Yudhistira Erlandinata, Mahasiswa Fakultas Ilmu Komputer Universitas Indonesia. <br/>
                         (yudhistira.erlandinata@ui.ac.id)
                     </p>

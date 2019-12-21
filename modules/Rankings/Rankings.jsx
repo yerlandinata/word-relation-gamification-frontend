@@ -31,9 +31,6 @@ class RankingsComponent extends React.Component {
                         </div>
                     )
                 )}
-                <div className="row text-center mt-3">
-                    <i>Peraturan permainan dapat berubah kapanpun</i>
-                </div>
             </div>
         )
     }

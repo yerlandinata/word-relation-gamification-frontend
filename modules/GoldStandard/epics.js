@@ -15,30 +15,49 @@ const beginGameEpic = (action$) =>
         mapTo(fethcGoldStandard())
     )
 
-const fetchGoldStandardEpic = (action$, state$, {publicApi}) =>
+const SAMPLE_GOLD_STANDARD = [{
+    wordRelationType: {
+        id: WORD_RELATION_TYPES.HYPONYMY.id,
+    },
+    lhsWord: 'manusia',
+    rhsWord: 'makhluk hidup',
+},{
+    wordRelationType: {
+        id: WORD_RELATION_TYPES.SYNONYMY.id,
+    },
+    lhsWord: 'hewan',
+    rhsWord: 'binatang',
+},{
+    wordRelationType: {
+        id: WORD_RELATION_TYPES.UNRELATED.id,
+    },
+    lhsWord: 'nasi',
+    rhsWord: 'comberan',
+},{
+    wordRelationType: {
+        id: WORD_RELATION_TYPES.HYPONYMY.id,
+    },
+    lhsWord: 'tumbuhan',
+    rhsWord: 'makhluk hidup',
+},{
+    wordRelationType: {
+        id: WORD_RELATION_TYPES.SYNONYMY.id,
+    },
+    lhsWord: 'sulit',
+    rhsWord: 'susah',
+},{
+    wordRelationType: {
+        id: WORD_RELATION_TYPES.UNRELATED.id,
+    },
+    lhsWord: 'makanan',
+    rhsWord: 'minuman',
+}]
+
+const fetchGoldStandardEpic = (action$) =>
     action$.pipe(
         ofType(FETCH_GOLD_STANDARD),
-        mergeMap(
-            action => publicApi.get('gold_standards').pipe(
-                map(({response}) => fetchGoldStandardSuccess(response.map(
-                    (goldStandard) => ({
-                        wordRelationType: {
-                            id: goldStandard.wrt.id,
-                            description: goldStandard.wrt.short_desc,
-                        },
-                        lhsWord: goldStandard.wp.word_1.replace(/_/g, ' '),
-                        rhsWord: goldStandard.wp.word_2.replace(/_/g, ' '),
-                        wordPairId: goldStandard.wp.id,
-                    })
-                ))),
-                catchError(error =>
-                    of(
-                        fetchGoldStandardFailure(
-                            error.xhr.response,
-                        )
-                    )
-                )
-            )
+        map(
+            () => fetchGoldStandardSuccess(SAMPLE_GOLD_STANDARD),
         )
     )
 

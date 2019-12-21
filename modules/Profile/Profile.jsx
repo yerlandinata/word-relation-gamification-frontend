@@ -39,6 +39,12 @@ class ProfileComponent extends React.Component {
                 </form>
                 <Center className="d-flex flex-column m-3">
                     <p className="text-center">Salam kenal! Nama ku Yudhistira Erlandinata, perancang game ini.</p>
+                    <p className="text-center">
+                        Sebelumnya saya ingin berterima kasih karena
+                        Kamu bersedia untuk berpartisipasi dalam permainan ini.
+                        Permainan ini adalah bagian dari penelitian saya tentang &quot;Relasi Semantik dalam Bahasa Indonesia&quot;.
+                        Interaksi dalam permainan akan direkam dan berpengaruh terhadap hasil penelitian ini.
+                    </p>
                 </Center>
             </div>
         )
