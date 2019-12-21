@@ -42,7 +42,7 @@ class ProfileComponent extends React.Component {
                     <p className="text-center">
                         Sebelumnya saya ingin berterima kasih karena
                         Kamu bersedia untuk berpartisipasi dalam permainan ini.
-                        Permainan ini adalah bagian dari penelitian saya tentang &quot;Relasi Semantik dalam Bahasa Indonesia&quot;.
+                        Permainan ini adalah bagian dari penelitian saya di Fasilkom UI tentang &quot;Relasi Semantik dalam Bahasa Indonesia&quot;.
                         Interaksi dalam permainan akan direkam dan berpengaruh terhadap hasil penelitian ini.
                     </p>
                 </Center>
