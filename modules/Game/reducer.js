@@ -93,10 +93,6 @@ const gameReducer = (state = INITIAL_STATE, { type, payload }) => {
             }
         case POST_ANNOTATION_FAILURE:
         case FETCH_PAIR_FAILURE:
-            return {
-                ...state,
-                isLoading: false,
-            }
         case LEVEL_UP_GAME_FAILURE:
             return {
                 ...state,
