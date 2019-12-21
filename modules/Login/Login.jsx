@@ -37,7 +37,17 @@ class LoginComponent extends React.Component {
                 </form>
                 {this.props.isError && <Center className="text-danger">No. HP tidak terdaftar</Center>}
                 <Center className="mt-2 d-flex flex-column">
-                    {!this.props.isLogin ? (<p className="text-center">Permainan ini berhadiah!</p>) : (<p className="text-center">Selamat datang kembali!</p>)}
+                    {!this.props.isLogin ? (<p className="text-center">Permainan ini berhadiah!</p>) : (
+                        <div>
+                            <p className="text-center">Selamat datang kembali!</p>
+                            <p className="text-center">
+                                Sebelumnya saya ingin berterima kasih karena
+                                Kamu bersedia untuk berpartisipasi dalam permainan ini.
+                                Permainan ini adalah bagian dari penelitian saya tentang &quot;Relasi Semantik dalam Bahasa Indonesia&quot;.
+                                Interaksi dalam permainan akan direkam dan berpengaruh terhadap hasil penelitian ini.
+                             </p>
+                        </div>
+                    )}
                 </Center>
             </div>
         )
