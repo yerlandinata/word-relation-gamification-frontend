@@ -16,7 +16,7 @@ GAME_TIME_LIMIT_MS=time limit in ms for each game level
 The crowdsourced corpus can be viewed here: https://github.com/yerlandinata/korpus-hiponim-hipernim
 
 ## App Screenshots
-
+![screenshots](https://github.com/yerlandinata/word-relation-gamification-frontend/blob/master/app_chosen_ss.png)
 
 ## Citation
 *short paper coming soon*
